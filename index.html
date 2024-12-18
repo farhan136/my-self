@@ -5,23 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farhan Anshari - Resume</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .resume {
+            background-color: #fff;
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        header p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .btn-contact {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .btn-contact:hover {
+            background-color: #0056b3;
+        }
+        section {
+            margin-bottom: 20px;
+        }
+        section h2 {
+            font-size: 1.5rem;
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-    <header class="text-center py-4">
-        <h1>Farhan Anshari</h1>
-        <p>Backend Developer / Fullstack Developer</p>
-        <p>Email: fanshari62@gmail.com | Phone: 085723193141</p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/farhan-anshari-776289223" target="_blank">Farhan Anshari</a></p>
-    </header>
+    <div class="resume">
+        <header>
+            <h1>Farhan Anshari</h1>
+            <p>Backend Developer / Fullstack Developer</p>
+            <p>Email: fanshari62@gmail.com | Phone: 085723193141</p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/farhan-anshari-776289223" target="_blank">Farhan Anshari</a></p>
+            <a href="mailto:fanshari62@gmail.com" class="btn-contact">Contact Me</a>
+        </header>
 
-    <div class="container my-5">
-        <section class="mb-4">
-            <h2 class="border-bottom pb-2">Summary</h2>
+        <section>
+            <h2>Summary</h2>
             <p>Backend developer with more than 3 years of experience. Skilled in web-based application and API development. Quick to adapt to new technologies and strong in programming logic. Experienced in working on large-scale projects such as HRIS, sales order, IT service management, and CCTV integration. Used to working in cross-department teams and collaborating with DevOps for deployment.</p>
         </section>
 
-        <section class="mb-4">
-            <h2 class="border-bottom pb-2">Work Experience</h2>
+        <section>
+            <h2>Work Experience</h2>
             <ul>
                 <li>
                     <strong>Backend Developer</strong> - Esha Pharama Technology - PT Astra Digital Mobil (Nov 2023 – Present)
@@ -41,29 +102,37 @@
                         <li>Worked closely with cross-functional teams to ensure project deliverables were met on time and exceeded client expectations.</li>
                     </ul>
                 </li>
+                <li>
+                    <strong>Backend Developer</strong> - Pateron Indonesia (Sep 2021 – Dec 2021)
+                    <ul>
+                        <li>Built APIs to support the company’s operational needs under the guidance of senior developers.</li>
+                        <li>Assisted in debugging and optimizing existing codebases to improve application performance.</li>
+                        <li>Participated in code reviews and learned industry best practices for software development.</li>
+                    </ul>
+                </li>
             </ul>
         </section>
 
-        <section class="mb-4">
-            <h2 class="border-bottom pb-2">Technical Skills</h2>
+        <section>
+            <h2>Technical Skills</h2>
             <ul>
                 <li>Programming Languages & Frameworks: PHP (Laravel, CodeIgniter, Symfony), JavaScript, Node.js, Jquery, Bootstrap, Prisma</li>
                 <li>Databases: MySQL, PostgreSQL</li>
                 <li>API Development: Rest API</li>
-                <li>Others: Docker (Basic), Python (Basic)</li>
-                <li>Deployment: Collaborated with DevOps for application and feature deployment</li>
+                <li>Others: Docker (Basic), Redis (Basic), Python (Basic), React (Basic), Vue (Basic)</li>
+                <li>Deployment: Gitlab, Github, SVN</li>
             </ul>
         </section>
 
-        <section class="mb-4">
-            <h2 class="border-bottom pb-2">Education</h2>
+        <section>
+            <h2>Education</h2>
             <ul>
                 <li>Bachelor's Degree in Information Systems - Gunadarma University (2021)</li>
             </ul>
         </section>
 
-        <section class="mb-4">
-            <h2 class="border-bottom pb-2">Courses and Certifications</h2>
+        <section>
+            <h2>Courses and Certifications</h2>
             <ul>
                 <li>Laravel – Build With Angga</li>
                 <li>Basic Python – Indonesia AI</li>
@@ -71,22 +140,22 @@
             </ul>
         </section>
 
-        <section class="mb-4">
-            <h2 class="border-bottom pb-2">Portfolio</h2>
+        <section>
+            <h2>Portfolio</h2>
             <ul>
                 <li><a href="https://docs.google.com/document/d/13KQ0qTohngTiWKQPadapwHt7Wh-HYK3D/edit?usp=sharing&ouid=103760141420869766598&rtpof=true&sd=true" target="_blank">List Portfolio</a></li>
             </ul>
         </section>
 
-        <section class="mb-4">
-            <h2 class="border-bottom pb-2">Career Goals</h2>
+        <section>
+            <h2>Career Goals</h2>
             <p>Seeking a position as a Backend Developer or Fullstack Developer in a company that values innovation and openness to new solutions, and does not engage in riba or activities contrary to personal beliefs.</p>
         </section>
-    </div>
 
-    <footer class="text-center py-4">
-        <p>&copy; 2024 Farhan Anshari. All Rights Reserved.</p>
-    </footer>
+        <footer>
+            <p>&copy; 2024 Farhan Anshari. All Rights Reserved.</p>
+        </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
