@@ -73,49 +73,102 @@
         #role-text {
             transition: opacity 0.3s ease-in-out;
         }
+
+        /* Modal Animation */
+        /* Smooth modal fade and slide */
+        #portfolioModal {
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease;
+        }
+        #portfolioModal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #portfolioModal .modal-content {
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        #portfolioModal.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .nav-neon:hover {
+            /* color: #64ffda; */
+            text-shadow: 0 0 4px rgba(100, 255, 218, 0.5);
+        }
+
+
     </style>
 
 </head>
 <body class="bg-navy text-slate font-sans antialiased">
 
     <!-- Header & Navbar -->
-    <header class="h-20 flex items-center justify-between px-6 md:px-12 fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-md shadow-md transition-all duration-300" id="navbar">
-        <div>
-            <a href="#" aria-label="homepage">
-                <!-- Initial "F" Logo -->
-                <svg class="w-10 h-10 text-highlight transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="100" height="100" rx="20" fill="none" stroke="currentColor" stroke-width="5"/>
-                    <path d="M35 30H65V40H35V30Z" fill="currentColor"/>
-                    <path d="M35 45H55V55H35V45Z" fill="currentColor"/>
-                    <path d="M35 60H45V80H35V60Z" fill="currentColor"/>
-                </svg>
-            </a>
-        </div>
+    <header id="navbar" class="fixed top-0 w-full h-20 flex items-center justify-between px-6 md:px-12 z-50 bg-navy/80 backdrop-blur-md shadow-md transition-all duration-300">
+        <!-- Logo -->
+        <a href="#" aria-label="homepage" class="flex items-center">
+            <svg class="w-10 h-10 text-highlight transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" rx="20" fill="none" stroke="currentColor" stroke-width="5" />
+                <path d="M35 30H65V40H35V30Z" fill="currentColor" />
+                <path d="M35 45H55V55H35V45Z" fill="currentColor" />
+                <path d="M35 60H45V80H35V60Z" fill="currentColor" />
+            </svg>
+        </a>
+
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex items-center space-x-8">
             <ol class="flex items-center space-x-8 list-[decimal-leading-zero] marker:text-highlight">
-                <li><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#about">About</a></li>
-                <li><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#experience">Experience</a></li>
-                <li><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#contact">Contact</a></li>
+                <li>
+                    <a href="#about" class="text-lightest-slate transition-all duration-300 nav-neon">About</a>
+                </li>
+                <li>
+                    <a href="#experience" class="text-lightest-slate transition-all duration-300 nav-neon">Experience</a>
+                </li>
+                <li>
+                    <a href="#portfolio" class="text-lightest-slate transition-all duration-300 nav-neon">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#contact" class="text-lightest-slate transition-all duration-300 nav-neon">Contact</a>
+                </li>
             </ol>
         </nav>
+
         <!-- Mobile Menu Button -->
         <button id="mobile-menu-button" class="md:hidden z-50">
             <i data-lucide="menu" class="w-8 h-8 text-highlight"></i>
         </button>
     </header>
 
-    <!-- Mobile Menu Sidebar -->
+    <!-- Mobile Sidebar Menu -->
     <aside id="mobile-menu" class="md:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-light-navy transform translate-x-full transition-transform duration-300 ease-in-out z-40">
         <nav class="h-full flex flex-col justify-center items-center">
-             <ol class="flex flex-col items-center space-y-8 list-[decimal-leading-zero] marker:text-highlight text-center">
-                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#about">About</a></li>
-                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#experience">Experience</a></li>
-                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#contact">Contact</a></li>
+            <ol class="flex flex-col items-center space-y-8 list-[decimal-leading-zero] marker:text-highlight text-center">
+                <li>
+                    <a href="#about" class="text-lightest-slate transition-all duration-300 nav-neon">About</a>
+                </li>
+                <li>
+                    <a href="#experience" class="text-lightest-slate transition-all duration-300 nav-neon">Experience</a>
+                </li>
+                <li>
+                    <a href="#portfolio" class="text-lightest-slate transition-all duration-300 nav-neon">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#contact" class="text-lightest-slate transition-all duration-300 nav-neon">Contact</a>
+                </li>
             </ol>
         </nav>
     </aside>
+
+    <!-- Overlay -->
     <div id="overlay" class="md:hidden fixed inset-0 bg-navy/50 z-30 hidden"></div>
+
 
 
     <!-- Left Side Element (Social Media) -->
@@ -224,6 +277,12 @@
                         <span class="inline-flex items-center gap-2 bg-gradient-to-r from-gray-400 to-gray-600 text-white px-4 py-2 rounded-full shadow hover:scale-105 transition-transform">
                             <i data-lucide="package" class="w-4 h-4"></i> Docker
                         </span>
+                        <span class="inline-flex items-center gap-2 bg-gradient-to-r from-red-400 to-red-600 text-white px-4 py-2 rounded-full shadow hover:scale-105 transition-transform">
+                            <i data-lucide="database" class="w-4 h-4"></i> Redis
+                        </span>
+                        <span class="inline-flex items-center gap-2 bg-gradient-to-r from-zinc-400 to-zinc-600 text-white px-4 py-2 rounded-full shadow hover:scale-105 transition-transform">
+                            <i data-lucide="terminal" class="w-4 h-4"></i> Linux
+                        </span>
                     </div>
                 </div>
 
@@ -243,7 +302,7 @@
                             <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer <span class="text-highlight">@ Intrias Mandiri Sejati</span></h3>
                             <p class="font-mono text-sm text-light-slate mb-3">Jan 2025 – Present</p>
                             <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Integrated IT Service Management (ITSM) platform with various monitoring tools including Datadog and Grafana, enabling real-time performance and issue tracking.</li>
+                                <li>Integrated applications with various monitoring tools including Datadog, Grafana, Sonarqube, enabling real-time performance and issue tracking.</li>
                                 <li>Enhanced moderation application to improve operational flow, increase data accuracy, and support better decision-making for internal teams.</li>
                             </ul>
                         </div>
@@ -304,23 +363,72 @@
                 </div>
             </section>
 
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="py-24 fade-up">
+                <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-4">
+                    Portfolio
+                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
+                </h2>
+                <p class="text-slate mb-10 font-mono text-sm md:text-base">
+                    Here are a few <span class="text-highlight font-semibold">chill vibe-coding projects</span> I built for fun and learning. Enjoy ✨
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Portfolio Item Example -->
+                    <div class="relative group cursor-pointer" onclick="openPortfolioModal('https://farhan136.github.io/my-self/portfolio/todolist.html')">
+                        <img src="https://farhan136.github.io/my-self/todolist.png" alt="Portfolio 1" class="rounded-md shadow-lg group-hover:opacity-80 transition">                        
+                        <div class="absolute inset-0 bg-navy/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                            <span class="text-xl font-bold tracking-wide text-highlight border border-highlight px-4 py-2 rounded hover:bg-highlight/10 transition-all duration-300">
+                                👁 View Project
+                            </span>
+                        </div>
+                    </div>
+                    <div class="relative group cursor-pointer" onclick="openPortfolioModal('https://farhan136.github.io/my-self/portfolio/guessing.html')">
+                        <img src="https://farhan136.github.io/my-self/guessing.png" alt="Portfolio 1" class="rounded-md shadow-lg group-hover:opacity-80 transition">                        
+                        <div class="absolute inset-0 bg-navy/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                            <span class="text-xl font-bold tracking-wide text-highlight border border-highlight px-4 py-2 rounded hover:bg-highlight/10 transition-all duration-300">
+                                👁 View Project
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Portfolio Modal -->
+            <div id="portfolioModal" class="fixed inset-0 bg-black/80 z-50 p-4">
+                <div class="modal-content bg-navy w-full max-w-4xl rounded-md shadow-lg relative overflow-hidden">
+                    <button onclick="closePortfolioModal()" class="absolute top-2 right-2 text-white hover:text-highlight">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                    <div class="aspect-video w-full">
+                        <iframe id="portfolioIframe" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+
 
              <!-- Contact Section -->
-            <section id="contact" class="py-24 text-center fade-up">
-                 <h2 class="font-mono text-highlight mb-2">03. What's Next?</h2>
-                 <h3 class="text-5xl font-bold text-lightest-slate mb-4">Get In Touch</h3>
-                 <p class="max-w-xl mx-auto mb-12">
-                    I'm currently open to new opportunities. Whether you have a question or just want to say hi, I'll do my best to get back to you!
-                 </p>
-                 <a href="mailto:fanshari62@gmail.com"
-                    class="font-mono text-highlight border border-highlight rounded py-4 px-7 hover:bg-highlight/10 transition-all duration-300"
+            <section id="contact" class="py-24 fade-up">
+                <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-4">
+                    What's Next?
+                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
+                </h2>
+                <h3 class="text-5xl font-bold text-lightest-slate mb-4">Get In Touch</h3>
+                <p class="max-w-2xl mb-12 text-slate">
+                    <strong class="text-highlight">I'm currently open to new opportunities</strong> — whether it's full-time work, freelance collaboration, or anything in between.
+                    <br><br>
+                    If you have a question, an idea, or simply want to say hi, feel free to reach out. I’ll do my best to respond promptly!
+                </p>
+                <a href="mailto:fanshari62@gmail.com"
+                    class="inline-block font-mono text-highlight border border-highlight rounded py-4 px-7 hover:bg-highlight/10 transition-all duration-300"
                     style="transition: box-shadow 0.3s ease-in-out;"
                     onmouseover="this.style.boxShadow='0 0 8px rgba(100,255,218,0.5), 0 0 20px rgba(100,255,218,0.3)'"
                     onmouseout="this.style.boxShadow='none'">
                     Say Hello
                 </a>
-
             </section>
+
         </main>
     </div>
 
@@ -343,7 +451,7 @@
             const isMenuHidden = mobileMenu.classList.contains('translate-x-full');
             mobileMenu.classList.toggle('translate-x-full');
             if (overlay) overlay.classList.toggle('hidden', isMenuHidden);
-            document.body.classList.toggle('overflow-hidden', !isMenuHidden);
+            // document.body.classList.toggle('overflow-hidden', !isMenuHidden);
             if (mobileMenuButton) {
                 const iconName = isMenuHidden ? 'x' : 'menu';
                 mobileMenuButton.innerHTML = `<i data-lucide="${iconName}" class="w-8 h-8 text-highlight"></i>`;
@@ -402,6 +510,34 @@
 
         // --- Initialise all icons ---
         lucide.createIcons();
+
+        function openPortfolioModal(embedUrl) {
+            const modal = document.getElementById('portfolioModal');
+            const iframe = document.getElementById('portfolioIframe');
+            iframe.src = embedUrl;
+
+            modal.classList.add('active');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closePortfolioModal() {
+            const modal = document.getElementById('portfolioModal');
+            const iframe = document.getElementById('portfolioIframe');
+
+            modal.classList.remove('active');
+            document.body.classList.remove('overflow-hidden');
+
+            // Tunggu animasi selesai sebelum hapus iframe src
+            setTimeout(() => {
+                iframe.src = '';
+            }, 400); // Sesuai durasi transition
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash && document.body.classList.contains('overflow-hidden')) {
+                document.body.classList.remove('overflow-hidden');
+            }
+        });
     </script>
 </body>
 </html>
