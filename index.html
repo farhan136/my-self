@@ -1,368 +1,830 @@
 <!DOCTYPE html>
+
 <html lang="en" class="scroll-smooth">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farhan Anshari | Developer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <style>
-        /* Custom Tailwind Configuration */
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    },
-                    colors: {
-                        'navy': '#0a192f',
-                        'light-navy': '#112240',
-                        'lightest-navy': '#233554',
-                        'slate': '#8892b0',
-                        'light-slate': '#a8b2d1',
-                        'lightest-slate': '#ccd6f6',
-                        'highlight': '#64ffda',
-                        'highlight-darker': '#33cdaa',
-                    },
-                    transitionTimingFunction: {
-                        'custom-ease': 'cubic-bezier(0.645, 0.045, 0.355, 1)',
-                    },
-                    boxShadow: {
-                        'neon': '0 0 8px theme("colors.highlight / 80%"), 0 0 20px theme("colors.highlight / 50%")',
-                    }
-                }
-            }
-        }
-        
-        /* Reset section counter */
-        body {
-            counter-reset: section;
-        }
+    <meta charset="UTF-8">
 
-        /* Numbered section headings */
-        .section-heading::before {
-            content: '0' counter(section) '.';
-            counter-increment: section;
-            margin-right: 0.75rem;
-            color: theme('colors.highlight');
-            font-family: theme('fontFamily.mono');
-            font-weight: 400;
-            text-shadow: 0 0 3px theme('colors.highlight / 70%');
-        }
-        
-        /* Fade-up animation on scroll */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Enhanced Timeline Styles */
-        .timeline-item {
-            position: relative;
-            padding: 1.5rem 0 1.5rem 3rem;
-            border-left: 2px solid theme('colors.lightest-navy');
-        }
-        .timeline-item:last-child {
-            border-left: 2px solid transparent; /* Hide last line */
-        }
-        .timeline-dot {
-            position: absolute;
-            left: -11px; /* Center the dot on the line */
-            top: 2.3rem;
-            width: 20px;
-            height: 20px;
-            background-color: theme('colors.navy');
-            border-radius: 50%;
-            border: 2px solid theme('colors.highlight');
-            box-shadow: 0 0 8px theme('colors.highlight / 80%');
-        }
-        .timeline-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .timeline-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px theme('colors.highlight / 40%');
-        }
+    <title>Farhan Anshari | Developer</title>
 
-        /* Role text animation */
-        #role-text {
-            transition: opacity 0.3s ease-in-out;
-        }
+    <!-- Import Tailwind CSS -->
 
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Import Fonts from Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Import Lucide Icons -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+
+        /* Custom Tailwind Configuration */
+
+        tailwind.config = {
+
+            theme: {
+
+                extend: {
+
+                    fontFamily: {
+
+                        sans: ['Inter', 'sans-serif'],
+
+                        mono: ['Fira Code', 'monospace'],
+
+                    },
+
+                    colors: {
+
+                        'navy': '#0a192f',
+
+                        'light-navy': '#112240',
+
+                        'lightest-navy': '#233554',
+
+                        'slate': '#8892b0',
+
+                        'light-slate': '#a8b2d1',
+
+                        'lightest-slate': '#ccd6f6',
+
+                        'highlight': '#64ffda',
+
+                        'highlight-darker': '#33cdaa',
+
+                    },
+
+                    transitionTimingFunction: {
+
+                        'custom-ease': 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+
+                    },
+
+                    boxShadow: {
+
+                        'neon': '0 0 8px theme("colors.highlight / 80%"), 0 0 20px theme("colors.highlight / 50%")',
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        
+
+        /* Reset section counter */
+
+        body {
+
+            counter-reset: section;
+
+        }
+
+
+
+        /* Numbered section headings */
+
+        .section-heading::before {
+
+            content: '0' counter(section) '.';
+
+            counter-increment: section;
+
+            margin-right: 0.75rem;
+
+            color: theme('colors.highlight');
+
+            font-family: theme('fontFamily.mono');
+
+            font-weight: 400;
+
+            text-shadow: 0 0 3px theme('colors.highlight / 70%');
+
+        }
+
+        
+
+        /* Fade-up animation on scroll */
+
+        .fade-up {
+
+            opacity: 0;
+
+            transform: translateY(20px);
+
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+
+        }
+
+        .fade-up.visible {
+
+            opacity: 1;
+
+            transform: translateY(0);
+
+        }
+
+
+
+        /* Enhanced Timeline Styles */
+
+        .timeline-item {
+
+            position: relative;
+
+            padding: 1.5rem 0 1.5rem 3rem;
+
+            border-left: 2px solid theme('colors.lightest-navy');
+
+        }
+
+        .timeline-item:last-child {
+
+            border-left: 2px solid transparent; /* Hide last line */
+
+        }
+
+        .timeline-dot {
+
+            position: absolute;
+
+            left: -11px; /* Center the dot on the line */
+
+            top: 2.3rem;
+
+            width: 20px;
+
+            height: 20px;
+
+            background-color: theme('colors.navy');
+
+            border-radius: 50%;
+
+            border: 2px solid theme('colors.highlight');
+
+            box-shadow: 0 0 8px theme('colors.highlight / 80%');
+
+        }
+
+        .timeline-card {
+
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+        .timeline-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow: 0 0 15px theme('colors.highlight / 40%');
+
+        }
+
+
+
+        /* Role text animation */
+
+        #role-text {
+
+            transition: opacity 0.3s ease-in-out;
+
+        }
+
+
+
+    </style>
+
 </head>
+
 <body class="bg-navy text-slate font-sans antialiased">
 
-    <header class="h-20 flex items-center justify-between px-6 md:px-12 fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-md shadow-md transition-all duration-300" id="navbar">
-        <div>
-            <a href="#" aria-label="homepage">
-                <svg class="w-10 h-10 text-highlight transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="100" height="100" rx="20" fill="none" stroke="currentColor" stroke-width="5"/>
-                    <path d="M35 30H65V40H35V30Z" fill="currentColor"/>
-                    <path d="M35 45H55V55H35V45Z" fill="currentColor"/>
-                    <path d="M35 60H45V80H35V60Z" fill="currentColor"/>
-                </svg>
-            </a>
-        </div>
-        <nav class="hidden md:flex items-center space-x-6">
-            <ol class="flex items-center space-x-6 list-[decimal-leading-zero] marker:text-highlight font-mono">
-                <li><a class="p-2 rounded text-lightest-slate hover:text-highlight hover:bg-light-navy/50 transition-all duration-300" href="#about">About</a></li>
-                <li><a class="p-2 rounded text-lightest-slate hover:text-highlight hover:bg-light-navy/50 transition-all duration-300" href="#experience">Experience</a></li>
-                <li><a class="p-2 rounded text-lightest-slate hover:text-highlight hover:bg-light-navy/50 transition-all duration-300" href="#contact">Contact</a></li>
-            </ol>
-        </nav>
-        <button id="mobile-menu-button" class="md:hidden z-50">
-            <i data-lucide="menu" class="w-8 h-8 text-highlight"></i>
-        </button>
-    </header>
-
-    <aside id="mobile-menu" class="md:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-navy transform translate-x-full transition-transform duration-300 ease-in-out z-40">
-        <nav class="h-full flex flex-col justify-center items-center">
-             <ol class="flex flex-col items-center space-y-8 list-[decimal-leading-zero] marker:text-highlight text-center">
-                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#about">About</a></li>
-                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#experience">Experience</a></li>
-                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#contact">Contact</a></li>
-            </ol>
-        </nav>
-    </aside>
-    <div id="overlay" class="md:hidden fixed inset-0 bg-navy/50 z-30 hidden"></div>
 
 
-    <div class="hidden md:block fixed bottom-0 left-12 w-10 z-10">
-        <ul class="flex flex-col items-center space-y-6 after:content-[''] after:block after:w-px after:h-24 after:bg-slate after:mt-6">
-            <li>
-                <a href="https://www.linkedin.com/in/farhan-anshari-776289223" target="_blank" rel="noopener noreferrer" class="block text-slate hover:text-highlight hover:-translate-y-1 transition-all"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-            </li>
-            <li>
-                <a href="https://medium.com/@brofarhan" target="_blank" rel="noopener noreferrer" class="block text-slate hover:text-highlight hover:-translate-y-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                        <title>Medium</title>
-                        <path d="M12 12c0 .24-.01.48-.04.71L7.1 21.49c-.2.4-.6.6-1 .6H5c-.6 0-1-.4-1-1v-1c0-.2.1-.5.3-.7l4.5-6.5c.2-.3.3-.6.3-.9V12c0-3.3-2.7-6-6-6H2c-.6 0-1 .4-1 1v1c0 .2.1.5.3.7l4.2 4.2c.2.2.3.5.3.7v.2C3.8 10.3 2 8.3 2 6V5c0-.6.4-1 1-1h1c3.9 0 7 3.1 7 7zm10.5-3.2c-.3-.2-.6-.3-.9-.3H20c-2.8 0-5 2.2-5 5v2c0 .6.4 1 1 1h1.1c.5 0 .8-.3 1-.7l4.3-7.5c.3-.5.2-1.1-.3-1.3z"></path>
-                    </svg>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <!-- Header & Navbar -->
 
-    <div class="hidden md:block fixed bottom-0 right-12 w-10 z-10">
-        <div class="flex flex-col items-center space-y-24 after:content-[''] after:block after:w-px after:h-24 after:bg-slate after:mt-6">
-            <a href="mailto:fanshari62@gmail.com" class="font-mono text-sm tracking-widest text-slate [writing-mode:vertical-rl] hover:text-highlight hover:-translate-y-1 transition-all">
-                fanshari62@gmail.com
-            </a>
-        </div>
-    </div>
+    <header class="h-20 flex items-center justify-between px-6 md:px-12 fixed top-0 w-full z-50 bg-navy/80 backdrop-blur-md shadow-md transition-all duration-300" id="navbar">
 
+        <div>
 
-    <div class="container mx-auto px-6 md:px-24 lg:px-48">
-        <main class="pt-24">
+            <a href="#" aria-label="homepage">
 
-            <section id="home" class="min-h-[calc(100vh-100px)] flex flex-col justify-center fade-up">
-                <p class="font-mono text-highlight mb-4">Hi, my name is</p>
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold text-lightest-slate">Farhan Anshari.</h1>
-                <h2 class="mt-2 text-4xl sm:text-6xl lg:text-7xl font-bold text-slate">
-                    I'm a <span id="role-text">Backend Developer.</span>
-                </h2>
-                <a href="#about" class="font-mono text-highlight border border-highlight rounded py-4 px-7 hover:bg-highlight/10 transition-all duration-300 mt-12 w-max hover:shadow-neon">
-                    Check out my journey!
-                </a>
-            </section>
+                <!-- Initial "F" Logo -->
 
-            <section id="about" class="py-24 fade-up">
-                <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-10">
-                    About Me
-                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
-                </h2>
-                <div class="flex flex-col lg:flex-row gap-12">
-                    <div class="lg:w-3/5 space-y-4">
-                        <p>
-                            I am a developer with over three years of experience in web and API development. Throughout my career, I have been involved in various large-scale projects, including HRIS, sales order systems, IT service management applications, and even CCTV system integration for government use.
-                        </p>
-                        <p>
-                            I am known for being a quick learner, adapting to new technologies, and having strong programming logic. I thrive in collaborative environments and in every project, I strive to deliver solutions that are functional, efficient, and maintainable.
-                        </p>
-                    </div>
-                     <div class="lg:w-2/5 flex justify-center items-start">
-                        <div class="relative group w-full max-w-xs mx-auto">
-                            <div class="absolute -inset-0.5 bg-highlight rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse group-hover:animate-none"></div>
-                            <div class="relative">
-                               <img src="https://farhan136.github.io/my-self/foto.png" alt="Profile Picture of Farhan Anshari" class="rounded-lg w-full h-auto">
-                               <div class="absolute inset-0 bg-navy/40 group-hover:bg-transparent transition duration-300 rounded-lg"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <svg class="w-10 h-10 text-highlight transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.5)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
 
-                <div class="mt-16">
-                     <h3 class="text-xl font-bold text-lightest-slate mb-6">My Skills</h3>
-                     <div class="flex flex-wrap gap-3 font-mono text-sm">
-                        <span class="bg-lightest-navy text-highlight py-2 px-4 rounded-full shadow-sm">Laravel</span>
-                        <span class="bg-lightest-navy text-highlight py-2 px-4 rounded-full shadow-sm">CodeIgniter</span>
-                        <span class="bg-lightest-navy text-highlight py-2 px-4 rounded-full shadow-sm">Symfony</span>
-                        <span class="bg-lightest-navy text-highlight py-2 px-4 rounded-full shadow-sm">Node.js</span>
-                        <span class="bg-lightest-navy text-highlight py-2 px-4 rounded-full shadow-sm">Express.js</span>
-                        <span class="bg-lightest-navy text-light-slate py-2 px-4 rounded-full shadow-sm">Bootstrap</span>
-                        <span class="bg-lightest-navy text-light-slate py-2 px-4 rounded-full shadow-sm">Tailwind CSS</span>
-                        <span class="bg-lightest-navy text-light-slate py-2 px-4 rounded-full shadow-sm">REST API</span>
-                        <span class="bg-lightest-navy text-light-slate py-2 px-4 rounded-full shadow-sm">MySQL</span>
-                        <span class="bg-lightest-navy text-light-slate py-2 px-4 rounded-full shadow-sm">PostgreSQL</span>
-                        <span class="bg-lightest-navy text-light-slate py-2 px-4 rounded-full shadow-sm">Docker</span>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="experience" class="py-24 fade-up">
-                 <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-10">
-                    Where I've Worked
-                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
-                </h2>
-                <div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer <span class="text-highlight">@ PT Astra Digital Mobil</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Jan 2025 - Present (via Intrias Mandiri Sejati)</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Integrate IT Service Management with monitoring tools.</li>
-                                <li>Enhance and support the moderation application.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer <span class="text-highlight">@ PT Astra Digital Mobil</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Nov 2023 - Dec 2024 (via Esha Pharama)</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Acted as the sole developer for the IT Service Management project, creating features to streamline IT service monitoring and management.</li>
-                                <li>Assisted in various other projects with backend development and API responsibilities.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Fullstack Developer <span class="text-highlight">@ PT BaliTowerindo Sentra, Tbk</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Jan 2022 - Nov 2023</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Developed and released new features for the HRIS, including e-certificates, shift management, and overtime calculation.</li>
-                                <li>Implemented sales report features for the sales order project.</li>
-                                <li>Contributed to a real-time CCTV monitoring dashboard for the DKI Jakarta government.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                          <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer (Intern) <span class="text-highlight">@ Pateron Indonesia</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Sep 2021 - Dec 2021</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Built APIs to support the company’s operational needs under the guidance of senior developers.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                    <rect width="100" height="100" rx="20" fill="none" stroke="currentColor" stroke-width="5"/>
 
-             <section id="contact" class="py-24 text-center fade-up">
-                 <h2 class="font-mono text-highlight mb-2">03. What's Next?</h2>
-                 <h3 class="text-5xl font-bold text-lightest-slate mb-4">Get In Touch</h3>
-                 <p class="max-w-xl mx-auto mb-12">
-                    I'm currently open to new opportunities. Whether you have a question or just want to say hi, I'll do my best to get back to you!
-                 </p>
-                 <a href="mailto:fanshari62@gmail.com" class="font-mono text-highlight border border-highlight rounded py-4 px-7 hover:bg-highlight/10 transition-all duration-300 hover:shadow-neon">
-                    Say Hello
-                </a>
-            </section>
-        </main>
-    </div>
+                    <path d="M35 30H65V40H35V30Z" fill="currentColor"/>
 
-    <footer class="text-center py-6">
-        <a href="https://brittanychiang.com/" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-slate hover:text-highlight transition-colors">
-            Design inspired by brittanychiang.com
-        </a>
-    </footer>
+                    <path d="M35 45H55V55H35V45Z" fill="currentColor"/>
+
+                    <path d="M35 60H45V80H35V60Z" fill="currentColor"/>
+
+                </svg>
+
+            </a>
+
+        </div>
+
+        <!-- Desktop Navigation -->
+
+        <nav class="hidden md:flex items-center space-x-8">
+
+            <ol class="flex items-center space-x-8 list-[decimal-leading-zero] marker:text-highlight">
+
+                <li><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#about">About</a></li>
+
+                <li><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#experience">Experience</a></li>
+
+                <li><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#contact">Contact</a></li>
+
+            </ol>
+
+        </nav>
+
+        <!-- Mobile Menu Button -->
+
+        <button id="mobile-menu-button" class="md:hidden z-50">
+
+            <i data-lucide="menu" class="w-8 h-8 text-highlight"></i>
+
+        </button>
+
+    </header>
 
 
-    <script>
-        // --- Mobile Menu Logic ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('overlay');
 
-        const toggleMenu = () => {
-            if (!mobileMenu) return;
-            const isMenuHidden = mobileMenu.classList.contains('translate-x-full');
-            mobileMenu.classList.toggle('translate-x-full');
-            if (overlay) overlay.classList.toggle('hidden', isMenuHidden);
-            document.body.classList.toggle('overflow-hidden', !isMenuHidden);
-            if (mobileMenuButton) {
-                const iconName = isMenuHidden ? 'x' : 'menu';
-                mobileMenuButton.innerHTML = `<i data-lucide="${iconName}" class="w-8 h-8 text-highlight"></i>`;
-                lucide.createIcons();
-            }
-        };
-        
-        if (mobileMenuButton) mobileMenuButton.addEventListener('click', toggleMenu);
-        if (overlay) overlay.addEventListener('click', toggleMenu);
-        if (mobileMenu) {
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', toggleMenu);
-            });
-        }
+    <!-- Mobile Menu Sidebar -->
 
-        // --- Navbar Scroll Logic ---
-        let lastScrollTop = 0;
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', function() {
-            if (!navbar) return;
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            navbar.style.top = (scrollTop > lastScrollTop && scrollTop > 100) ? '-80px' : '0';
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        });
+    <aside id="mobile-menu" class="md:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-light-navy transform translate-x-full transition-transform duration-300 ease-in-out z-40">
 
-        // --- Fade-up & Animate on Scroll ---
-        const animatedElements = document.querySelectorAll('.fade-up');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+        <nav class="h-full flex flex-col justify-center items-center">
 
-        animatedElements.forEach(el => {
-            observer.observe(el);
-        });
-        
-        // --- Role Text Animation ---
-        const roles = ["Backend Developer.", "Fullstack Developer."];
-        let roleIndex = 0;
-        const roleTextElement = document.getElementById('role-text');
-        
-        if (roleTextElement) {
-            setInterval(() => {
-                roleIndex = (roleIndex + 1) % roles.length;
-                roleTextElement.style.opacity = 0;
-                setTimeout(() => {
-                    roleTextElement.textContent = roles[roleIndex];
-                    roleTextElement.style.opacity = 1;
-                }, 300); // match transition duration
-            }, 3000); // Change text every 3 seconds
-        }
+             <ol class="flex flex-col items-center space-y-8 list-[decimal-leading-zero] marker:text-highlight text-center">
 
-        // --- Initialise all icons ---
-        lucide.createIcons();
-    </script>
+                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#about">About</a></li>
+
+                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#experience">Experience</a></li>
+
+                <li class="text-lg"><a class="text-lightest-slate hover:text-highlight transition-colors duration-300" href="#contact">Contact</a></li>
+
+            </ol>
+
+        </nav>
+
+    </aside>
+
+    <div id="overlay" class="md:hidden fixed inset-0 bg-navy/50 z-30 hidden"></div>
+
+
+
+
+
+    <!-- Left Side Element (Social Media) -->
+
+    <div class="hidden md:block fixed bottom-0 left-12 w-10 z-10">
+
+        <ul class="flex flex-col items-center space-y-6 after:content-[''] after:block after:w-px after:h-24 after:bg-slate after:mt-6">
+
+            <li><a href="https://www.linkedin.com/in/farhan-anshari-776289223" target="_blank" rel="noopener noreferrer" class="block text-slate hover:text-highlight hover:-translate-y-1 transition-all"><i data-lucide="linkedin" class="w-5 h-5"></i></a></li>
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- Right Side Element (Email) -->
+
+    <div class="hidden md:block fixed bottom-0 right-12 w-10 z-10">
+
+        <div class="flex flex-col items-center space-y-24 after:content-[''] after:block after:w-px after:h-24 after:bg-slate after:mt-6">
+
+            <a href="mailto:fanshari62@gmail.com" class="font-mono text-sm tracking-widest text-slate [writing-mode:vertical-rl] hover:text-highlight hover:-translate-y-1 transition-all">
+
+                fanshari62@gmail.com
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="container mx-auto px-6 md:px-24 lg:px-48">
+
+        <main class="pt-24">
+
+
+
+            <!-- Hero Section -->
+
+            <section id="home" class="min-h-[calc(100vh-100px)] flex flex-col justify-center fade-up">
+
+                <p class="font-mono text-highlight mb-4">Hi, my name is</p>
+
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold text-lightest-slate">Farhan Anshari.</h1>
+
+                <h2 class="mt-2 text-4xl sm:text-6xl lg:text-7xl font-bold text-slate">
+
+                    I'm a <span id="role-text">Backend Developer.</span>
+
+                </h2>
+
+                <a href="#about" class="font-mono text-highlight border border-highlight rounded py-4 px-7 hover:bg-highlight/10 transition-all duration-300 mt-12 w-max hover:shadow-neon">
+
+                    Check out my journey!
+
+                </a>
+
+            </section>
+
+
+
+            <!-- About Me Section -->
+
+            <section id="about" class="py-24 fade-up">
+
+                <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-10">
+
+                    About Me
+
+                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
+
+                </h2>
+
+                <div class="flex flex-col lg:flex-row gap-12">
+
+                    <div class="lg:w-3/5 space-y-4">
+
+                        <p>
+
+                            I am a developer with over three years of experience in web and API development. Throughout my career, I have been involved in various large-scale projects, including HRIS, sales order systems, IT service management applications, and even CCTV system integration for government use.
+
+                        </p>
+
+                        <p>
+
+                            I am known for being a quick learner, adapting to new technologies, and having strong programming logic. I thrive in collaborative environments and in every project, I strive to deliver solutions that are functional, efficient, and maintainable.
+
+                        </p>
+
+                    </div>
+
+                     <div class="lg:w-2/5 flex justify-center items-start">
+
+                        <div class="relative group w-full max-w-xs mx-auto">
+
+                            <div class="absolute -inset-0.5 bg-highlight rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse group-hover:animate-none"></div>
+
+                            <div class="relative">
+
+                               <img src="https://farhan136.github.io/my-self/foto.png" alt="Profile Picture of Farhan Anshari" class="rounded-lg w-full h-auto">
+
+                               <div class="absolute inset-0 bg-navy/40 group-hover:bg-transparent transition duration-300 rounded-lg"></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- My Skills Section -->
+
+                <div class="mt-16">
+
+                     <h3 class="text-xl font-bold text-lightest-slate mb-6">My Skills</h3>
+
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 font-mono text-sm">
+
+                        <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">Laravel</span><span class="text-sm font-medium text-light-slate">80%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 80%"></div></div>
+
+                        </div>
+
+                        <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">CodeIgniter</span><span class="text-sm font-medium text-light-slate">80%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 80%"></div></div>
+
+                        </div>
+
+                        <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">Symfony</span><span class="text-sm font-medium text-light-slate">70%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 70%"></div></div>
+
+                        </div>
+
+                         <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">Node / Express JS</span><span class="text-sm font-medium text-light-slate">70%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 70%"></div></div>
+
+                        </div>
+
+                         <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">Bootstrap</span><span class="text-sm font-medium text-light-slate">90%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 90%"></div></div>
+
+                        </div>
+
+                         <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">Tailwind CSS</span><span class="text-sm font-medium text-light-slate">60%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 60%"></div></div>
+
+                        </div>
+
+                        <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">Rest API</span><span class="text-sm font-medium text-light-slate">70%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 70%"></div></div>
+
+                        </div>
+
+                         <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">MySQL</span><span class="text-sm font-medium text-light-slate">80%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 80%"></div></div>
+
+                        </div>
+
+                        <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">PostgreSQL</span><span class="text-sm font-medium text-light-slate">60%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 60%"></div></div>
+
+                        </div>
+
+                        <!-- Skill Item -->
+
+                        <div>
+
+                            <div class="flex justify-between mb-1"><span class="text-base font-medium text-light-slate">Docker</span><span class="text-sm font-medium text-light-slate">50%</span></div>
+
+                            <div class="w-full bg-lightest-navy rounded-full h-2.5"><div class="bg-gradient-to-r from-highlight to-highlight-darker h-2.5 rounded-full" style="width: 50%"></div></div>
+
+                        </div>
+
+                     </div>
+
+                </div>
+
+            </section>
+
+            
+
+            <!-- Work Experience Section -->
+
+            <section id="experience" class="py-24 fade-up">
+
+                 <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-10">
+
+                    Where I've Worked
+
+                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
+
+                </h2>
+
+                <div>
+
+                    <!-- Timeline Item 1 -->
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <div class="timeline-card bg-light-navy p-6 rounded-md">
+
+                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer <span class="text-highlight">@ PT Astra Digital Mobil</span></h3>
+
+                            <p class="font-mono text-sm text-light-slate mb-3">Jan 2025 - Present (via Intrias Mandiri Sejati)</p>
+
+                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
+
+                               <li>Integrate IT Service Management with monitoring tools.</li>
+
+                               <li>Enhance and support the moderation application.</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <div class="timeline-card bg-light-navy p-6 rounded-md">
+
+                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer <span class="text-highlight">@ PT Astra Digital Mobil</span></h3>
+
+                            <p class="font-mono text-sm text-light-slate mb-3">Nov 2023 - Dec 2024 (via Esha Pharama)</p>
+
+                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
+
+                               <li>Acted as the sole developer for the IT Service Management project, creating features to streamline IT service monitoring and management.</li>
+
+                               <li>Assisted in various other projects with backend development and API responsibilities.</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <div class="timeline-card bg-light-navy p-6 rounded-md">
+
+                            <h3 class="text-xl font-semibold text-lightest-slate">Fullstack Developer <span class="text-highlight">@ PT BaliTowerindo Sentra, Tbk</span></h3>
+
+                            <p class="font-mono text-sm text-light-slate mb-3">Jan 2022 - Nov 2023</p>
+
+                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
+
+                               <li>Developed and released new features for the HRIS, including e-certificates, shift management, and overtime calculation.</li>
+
+                               <li>Implemented sales report features for the sales order project.</li>
+
+                               <li>Contributed to a real-time CCTV monitoring dashboard for the DKI Jakarta government.</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Timeline Item 4 -->
+
+                     <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                         <div class="timeline-card bg-light-navy p-6 rounded-md">
+
+                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer (Intern) <span class="text-highlight">@ Pateron Indonesia</span></h3>
+
+                            <p class="font-mono text-sm text-light-slate mb-3">Sep 2021 - Dec 2021</p>
+
+                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
+
+                               <li>Built APIs to support the company’s operational needs under the guidance of senior developers.</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+             <!-- Contact Section -->
+
+            <section id="contact" class="py-24 text-center fade-up">
+
+                 <h2 class="font-mono text-highlight mb-2">03. What's Next?</h2>
+
+                 <h3 class="text-5xl font-bold text-lightest-slate mb-4">Get In Touch</h3>
+
+                 <p class="max-w-xl mx-auto mb-12">
+
+                    I'm currently open to new opportunities. Whether you have a question or just want to say hi, I'll do my best to get back to you!
+
+                 </p>
+
+                 <a href="mailto:fanshari62@gmail.com" class="font-mono text-highlight border border-highlight rounded py-4 px-7 hover:bg-highlight/10 transition-all duration-300 hover:shadow-neon">
+
+                    Say Hello
+
+                </a>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- Footer -->
+
+    <footer class="text-center py-6">
+
+        <a href="https://brittanychiang.com/" target="_blank" rel="noopener noreferrer" class="font-mono text-sm text-slate hover:text-highlight transition-colors">
+
+            Design inspired by brittanychiang.com
+
+        </a>
+
+    </footer>
+
+
+
+
+
+    <script>
+
+        // --- Mobile Menu Logic ---
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        const overlay = document.getElementById('overlay');
+
+
+
+        const toggleMenu = () => {
+
+            if (!mobileMenu) return;
+
+            const isMenuHidden = mobileMenu.classList.contains('translate-x-full');
+
+            mobileMenu.classList.toggle('translate-x-full');
+
+            if (overlay) overlay.classList.toggle('hidden', isMenuHidden);
+
+            document.body.classList.toggle('overflow-hidden', !isMenuHidden);
+
+            if (mobileMenuButton) {
+
+                const iconName = isMenuHidden ? 'x' : 'menu';
+
+                mobileMenuButton.innerHTML = `<i data-lucide="${iconName}" class="w-8 h-8 text-highlight"></i>`;
+
+                lucide.createIcons();
+
+            }
+
+        };
+
+        
+
+        if (mobileMenuButton) mobileMenuButton.addEventListener('click', toggleMenu);
+
+        if (overlay) overlay.addEventListener('click', toggleMenu);
+
+        if (mobileMenu) {
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+
+                link.addEventListener('click', toggleMenu);
+
+            });
+
+        }
+
+
+
+        // --- Navbar Scroll Logic ---
+
+        let lastScrollTop = 0;
+
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', function() {
+
+            if (!navbar) return;
+
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            navbar.style.top = (scrollTop > lastScrollTop && scrollTop > 100) ? '-80px' : '0';
+
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+        });
+
+
+
+        // --- Fade-up & Animate on Scroll ---
+
+        const animatedElements = document.querySelectorAll('.fade-up');
+
+        const observer = new IntersectionObserver((entries) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add('visible');
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        }, { threshold: 0.1 });
+
+
+
+        animatedElements.forEach(el => {
+
+            observer.observe(el);
+
+        });
+
+        
+
+        // --- Role Text Animation ---
+
+        const roles = ["Backend Developer.", "Fullstack Developer."];
+
+        let roleIndex = 0;
+
+        const roleTextElement = document.getElementById('role-text');
+
+        
+
+        if (roleTextElement) {
+
+            setInterval(() => {
+
+                roleIndex = (roleIndex + 1) % roles.length;
+
+                roleTextElement.style.opacity = 0;
+
+                setTimeout(() => {
+
+                    roleTextElement.textContent = roles[roleIndex];
+
+                    roleTextElement.style.opacity = 1;
+
+                }, 300); // match transition duration
+
+            }, 3000); // Change text every 3 seconds
+
+        }
+
+
+
+        // --- Initialise all icons ---
+
+        lucide.createIcons();
+
+    </script>
+
 </body>
+
 </html>
