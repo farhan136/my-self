@@ -73,7 +73,7 @@
             inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
             pointer-events: none;
-            z-index: 999;
+            z-index: 998;
             opacity: 0.4;
         }
 
@@ -94,7 +94,7 @@
             background: radial-gradient(circle, rgba(0,229,195,0.06) 0%, transparent 70%);
             pointer-events: none;
             transform: translate(-50%, -50%);
-            z-index: 0;
+            z-index: 1;
             transition: opacity 0.3s ease;
         }
 
@@ -521,7 +521,7 @@
     <div id="overlay" class="md:hidden fixed inset-0 bg-navy/60 z-30 hidden backdrop-blur-sm"></div>
 
     <!-- ═══ SIDE SOCIALS ═══ -->
-    <div class="hidden md:flex fixed bottom-0 left-10 flex-col items-center gap-5 z-10">
+    <div class="hidden md:flex fixed bottom-0 left-10 flex-col items-center gap-5" style="z-index: 1000; pointer-events: auto;">
         <a href="https://www.linkedin.com/in/farhan-anshari-776289223" target="_blank" rel="noopener noreferrer" class="social-link"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
         <a href="https://lynk.id/farhanthebuilder" target="_blank" rel="noopener noreferrer" class="social-link"><i data-lucide="external-link" class="w-4 h-4"></i></a>
         <a href="https://medium.com/@brofarhan" target="_blank" rel="noopener noreferrer" class="social-link" title="Medium">
@@ -531,7 +531,7 @@
     </div>
 
     <!-- ═══ SIDE EMAIL ═══ -->
-    <div class="hidden md:flex fixed bottom-0 right-10 flex-col items-center gap-5 z-10">
+    <div class="hidden md:flex fixed bottom-0 right-10 flex-col items-center gap-5" style="z-index: 1000; pointer-events: auto;">
         <a href="mailto:fanshari62@gmail.com" class="email-link">fanshari62@gmail.com</a>
         <span class="side-line mt-2"></span>
     </div>
