@@ -5,106 +5,366 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farhan Anshari | Developer</title>
-    <!-- Import Tailwind CSS -->
+    <script>
+        // Suppress Tailwind CDN production warning (intentional for static portfolio)
+        if (typeof console !== 'undefined') {
+            const _warn = console.warn.bind(console);
+            console.warn = (...args) => {
+                if (typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
+                _warn(...args);
+            };
+        }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'navy': '#0a192f',
-                        'light-navy': '#112240',
-                        'lightest-navy': '#233554',
-                        'slate': '#8892b0',
-                        'light-slate': '#a8b2d1',
-                        'lightest-slate': '#ccd6f6',
-                        'white': '#e6f1ff',
-                        'highlight': '#64ffda',
+                        'navy': '#080d14',
+                        'navy-mid': '#0d1520',
+                        'light-navy': '#111d2e',
+                        'lightest-navy': '#1a2d45',
+                        'slate': '#7a8599',
+                        'light-slate': '#a0aec0',
+                        'lightest-slate': '#cdd6f4',
+                        'white': '#e8f0ff',
+                        'highlight': '#00e5c3',
+                        'highlight-dim': '#00b89e',
+                        'accent': '#7c6eff',
+                    },
+                    fontFamily: {
+                        'display': ['"Syne"', 'sans-serif'],
+                        'mono': ['"JetBrains Mono"', 'monospace'],
+                        'body': ['"DM Sans"', 'sans-serif'],
                     },
                 },
             },
         }
     </script>
-    <!-- Import Fonts from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
-        rel="stylesheet">
-    <!-- Import Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Import AOS (Animate On Scroll) -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 
     <style>
-        /* Reset section counter */
+        :root {
+            --highlight: #00e5c3;
+            --accent: #7c6eff;
+            --navy: #080d14;
+            --navy-mid: #0d1520;
+            --light-navy: #111d2e;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
+            background-color: var(--navy);
+            color: #7a8599;
+            font-family: 'DM Sans', sans-serif;
             counter-reset: section;
+            overflow-x: hidden;
         }
 
-        /* Numbered section headings */
+        /* ─── NOISE TEXTURE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.4;
+        }
+
+        /* ─── CUSTOM SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: var(--navy); }
+        ::-webkit-scrollbar-thumb { background: var(--highlight); border-radius: 2px; }
+
+        /* ─── SELECTION ─── */
+        ::selection { background: rgba(0,229,195,0.15); color: var(--highlight); }
+
+        /* ─── CURSOR GLOW ─── */
+        #cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,229,195,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* ─── GRID BACKGROUND ─── */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(0,229,195,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,229,195,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* ─── NAVBAR ─── */
+        #navbar {
+            background: rgba(8, 13, 20, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,229,195,0.06);
+            transition: transform 0.4s ease, background 0.3s ease;
+        }
+
+        /* ─── NAV LINKS ─── */
+        .nav-link {
+            position: relative;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #7a8599;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--highlight);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(0,229,195,0.5);
+        }
+        .nav-link:hover { color: var(--highlight); }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ─── SECTION HEADINGS ─── */
+        .section-heading {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+        }
         .section-heading::before {
-            content: '0' counter(section) '.';
+            content: '0' counter(section) ' /';
             counter-increment: section;
-            margin-right: 0.75rem;
-            color: #64ffda;
-            font-family: 'Fira Code', monospace;
+            margin-right: 1rem;
+            color: var(--highlight);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
             font-weight: 400;
-            text-shadow: 0 0 3px rgba(100, 255, 218, 0.7);
+            letter-spacing: 0.1em;
         }
 
-        /* Fade-up animation on scroll */
-        .fade-up {
+        /* ─── HERO ─── */
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--highlight);
+            border: 1px solid rgba(0,229,195,0.2);
+            background: rgba(0,229,195,0.04);
+            padding: 6px 14px;
+            border-radius: 100px;
+            letter-spacing: 0.12em;
+        }
+        .hero-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--highlight);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--highlight);
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            background: linear-gradient(135deg, #cdd6f4 30%, #7a8599 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-role {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            color: #1a2d45;
+            -webkit-text-stroke: 1px rgba(204,214,244,0.15);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+        }
+
+        #role-text {
+            color: var(--highlight);
+            -webkit-text-stroke: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        /* ─── CTA BUTTON ─── */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--highlight);
+            border: 1px solid rgba(0,229,195,0.3);
+            padding: 14px 28px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,229,195,0.08), transparent);
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            transition: opacity 0.3s ease;
+        }
+        .cta-btn:hover::before { opacity: 1; }
+        .cta-btn:hover {
+            border-color: var(--highlight);
+            box-shadow: 0 0 20px rgba(0,229,195,0.2), inset 0 0 20px rgba(0,229,195,0.03);
+            transform: translateY(-2px);
         }
 
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
+        /* ─── GLOWING DIVIDER ─── */
+        .glow-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,229,195,0.3), transparent);
+            flex-grow: 1;
+            margin-left: 1.5rem;
         }
 
-        /* Enhanced Timeline Styles */
+        /* ─── PROFILE IMAGE ─── */
+        .profile-wrap {
+            position: relative;
+        }
+        .profile-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--highlight), var(--accent), transparent);
+            z-index: 0;
+            opacity: 0.6;
+            transition: opacity 0.4s ease;
+        }
+        .profile-wrap:hover::before { opacity: 1; }
+        .profile-wrap img {
+            position: relative;
+            z-index: 1;
+            border-radius: 10px;
+            filter: saturate(0.8) brightness(0.9);
+            transition: all 0.4s ease;
+        }
+        .profile-wrap:hover img { filter: saturate(1) brightness(1); }
+
+        /* ─── SKILL BADGES ─── */
+        .skill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+            color: #a0aec0;
+            transition: all 0.3s ease;
+        }
+        .skill-badge:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0,229,195,0.3);
+            background: rgba(0,229,195,0.04);
+            color: var(--highlight);
+        }
+        .skill-badge svg { width: 14px; height: 14px; }
+
+        /* ─── TIMELINE ─── */
         .timeline-item {
             position: relative;
-            padding: 1.5rem 0 1.5rem 3rem;
-            border-left: 2px solid #233554;
+            padding: 0 0 2.5rem 2.5rem;
+            border-left: 1px solid rgba(0,229,195,0.12);
         }
-
-        .timeline-item:last-child {
-            border-left: 2px solid transparent;
-        }
-
+        .timeline-item:last-child { border-left: 1px solid transparent; }
         .timeline-dot {
             position: absolute;
-            left: -11px;
-            top: 2.3rem;
-            width: 20px;
-            height: 20px;
-            background-color: #0a192f;
+            left: -5px;
+            top: 1.8rem;
+            width: 9px;
+            height: 9px;
+            background: var(--highlight);
             border-radius: 50%;
-            border: 2px solid #64ffda;
-            box-shadow: 0 0 8px rgba(100, 255, 218, 0.8);
+            box-shadow: 0 0 12px rgba(0,229,195,0.8), 0 0 24px rgba(0,229,195,0.3);
         }
-
         .timeline-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(13, 21, 32, 0.7);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.35s ease;
         }
-
         .timeline-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
+            border-color: rgba(0,229,195,0.15);
+            background: rgba(13, 21, 32, 1);
+            transform: translateX(4px);
+            box-shadow: -4px 0 20px rgba(0,229,195,0.06);
         }
 
-        /* Role text animation */
-        #role-text {
-            transition: opacity 0.3s ease-in-out;
+        /* ─── PORTFOLIO CARDS ─── */
+        .portfolio-card {
+            background: rgba(13, 21, 32, 0.7);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .portfolio-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0,229,195,0.04), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .portfolio-card:hover {
+            border-color: rgba(0,229,195,0.2);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,229,195,0.1);
+        }
+        .portfolio-card:hover::after { opacity: 1; }
+
+        .project-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 160px;
+            background: linear-gradient(135deg, rgba(13,21,32,1), rgba(8,13,20,1));
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .project-icon svg { transition: all 0.4s ease; }
+        .portfolio-card:hover .project-icon svg {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 12px rgba(0,229,195,0.5));
         }
 
-        /* Modal Animation */
-        /* Smooth modal fade and slide */
+        /* ─── MODAL ─── */
         #portfolioModal {
             opacity: 0;
             pointer-events: none;
@@ -112,828 +372,619 @@
             align-items: center;
             justify-content: center;
             transition: opacity 0.4s ease;
+            backdrop-filter: blur(8px);
         }
-
-        #portfolioModal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
+        #portfolioModal.active { opacity: 1; pointer-events: auto; }
         #portfolioModal .modal-content {
-            transform: translateY(-20px);
+            transform: translateY(-20px) scale(0.98);
             opacity: 0;
             transition: transform 0.4s ease, opacity 0.4s ease;
         }
-
         #portfolioModal.active .modal-content {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
             opacity: 1;
         }
 
-        .nav-neon:hover {
-            /* color: #64ffda; */
-            text-shadow: 0 0 4px rgba(100, 255, 218, 0.5);
+        /* ─── MOBILE MENU ─── */
+        #mobile-menu {
+            background: rgba(8,13,20,0.97);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(0,229,195,0.08);
         }
 
-
-        /* Glassmorphism Classes */
-        .glass {
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(100, 255, 218, 0.1);
-        }
-
-        .nav-glass {
-            background: rgba(10, 25, 47, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-        }
-
-        /* Skill Badge Colors */
-        .skill-badge {
+        /* ─── SOCIAL LINKS ─── */
+        .social-link {
+            color: #7a8599;
             transition: all 0.3s ease;
-            border: 1px solid rgba(100, 255, 218, 0.2);
+        }
+        .social-link:hover {
+            color: var(--highlight);
+            transform: translateY(-3px);
         }
 
-        .skill-badge:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 5px 15px rgba(2, 12, 27, 0.4);
+        /* ─── EMAIL ─── */
+        .email-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: #7a8599;
+            writing-mode: vertical-rl;
+            transition: all 0.3s ease;
+        }
+        .email-link:hover { color: var(--highlight); transform: translateY(-3px); }
+
+        /* ─── SIDE LINES ─── */
+        .side-line {
+            display: block;
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, rgba(122,133,153,0.4), transparent);
+            margin: 0 auto;
         }
 
-        .skill-laravel {
-            background: rgba(255, 45, 32, 0.1);
-            color: #ff2d20;
-            border-color: rgba(255, 45, 32, 0.3);
+        /* ─── FADE IN ANIMATIONS ─── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        [data-delay="1"] { transition-delay: 0.1s; }
+        [data-delay="2"] { transition-delay: 0.2s; }
+        [data-delay="3"] { transition-delay: 0.3s; }
+        [data-delay="4"] { transition-delay: 0.4s; }
+        [data-delay="5"] { transition-delay: 0.5s; }
+
+        /* ─── STATS ─── */
+        .stat-card {
+            background: rgba(13,21,32,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            border-color: rgba(0,229,195,0.2);
+            background: rgba(13,21,32,0.8);
         }
 
-        .skill-ci {
-            background: rgba(238, 67, 35, 0.1);
-            color: #ee4323;
-            border-color: rgba(238, 67, 35, 0.3);
+        /* ─── TAG CHIPS ─── */
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            color: var(--highlight);
+            background: rgba(0,229,195,0.07);
+            border: 1px solid rgba(0,229,195,0.15);
+            padding: 3px 10px;
+            border-radius: 100px;
         }
 
-        .skill-symfony {
-            background: rgba(0, 0, 0, 0.1);
-            color: #ffffff;
-            border-color: rgba(255, 255, 255, 0.3);
+        /* ─── CONTACT ─── */
+        .contact-blob {
+            background: radial-gradient(ellipse at center, rgba(0,229,195,0.04) 0%, transparent 70%);
         }
 
-        .skill-node {
-            background: rgba(104, 160, 99, 0.1);
-            color: #68a063;
-            border-color: rgba(104, 160, 99, 0.3);
-        }
-
-        .skill-rails {
-            background: rgba(204, 0, 0, 0.1);
-            color: #cc0000;
-            border-color: rgba(204, 0, 0, 0.3);
-        }
-
-        .skill-tailwind {
-            background: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            border-color: rgba(56, 189, 248, 0.3);
-        }
-
-        .skill-bootstrap {
-            background: rgba(121, 82, 179, 0.1);
-            color: #7952b3;
-            border-color: rgba(121, 82, 179, 0.3);
-        }
-
-        .skill-mysql {
-            background: rgba(0, 117, 143, 0.1);
-            color: #00758f;
-            border-color: rgba(0, 117, 143, 0.3);
-        }
-
-        .skill-postgres {
-            background: rgba(51, 103, 145, 0.1);
-            color: #336791;
-            border-color: rgba(51, 103, 145, 0.3);
-        }
-
-        .skill-docker {
-            background: rgba(36, 150, 237, 0.1);
-            color: #2496ed;
-            border-color: rgba(36, 150, 237, 0.3);
-        }
-
-        .skill-redis {
-            background: rgba(216, 44, 32, 0.1);
-            color: #d82c20;
-            border-color: rgba(216, 44, 32, 0.3);
-        }
-
-        .skill-linux {
-            background: rgba(255, 214, 0, 0.1);
-            color: #ffd600;
-            border-color: rgba(255, 214, 0, 0.3);
-        }
-
-        /* Project Placeholders */
-        .project-placeholder {
-            background: linear-gradient(135deg, rgba(17, 34, 64, 1) 0%, rgba(10, 25, 47, 1) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-        }
-
-        /* Portfolio Card Hover */
-        .portfolio-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .portfolio-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.7);
-        }
-
-        .portfolio-card:hover .project-image {
-            filter: grayscale(0%) brightness(100%);
-        }
-
-        .project-image {
-            transition: all 0.4s ease;
-            filter: grayscale(100%) brightness(80%);
-        }
-
-        .text-neon {
-            color: #64ffda;
-            text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0a192f;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #233554;
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64ffda;
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.04);
         }
     </style>
-
 </head>
 
-<body class="bg-navy text-slate font-sans antialiased">
+<body class="grid-bg">
 
-    <!-- Header & Navbar -->
-    <header id="navbar"
-        class="fixed top-0 w-full h-20 flex items-center justify-between px-6 md:px-12 z-50 nav-glass shadow-lg border-b border-highlight/10 transition-all duration-300">
-        <!-- Logo -->
-        <a href="#" aria-label="homepage" class="flex items-center">
-            <svg class="w-10 h-10 text-highlight transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(100,255,218,0.5)]"
-                viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100" height="100" rx="20" fill="none" stroke="currentColor" stroke-width="5" />
-                <path d="M35 30H65V40H35V30Z" fill="currentColor" />
-                <path d="M35 45H55V55H35V45Z" fill="currentColor" />
-                <path d="M35 60H45V80H35V60Z" fill="currentColor" />
+    <!-- Cursor glow -->
+    <div id="cursor-glow"></div>
+
+    <!-- ═══ NAVBAR ═══ -->
+    <header id="navbar" class="fixed top-0 w-full h-16 flex items-center justify-between px-6 md:px-12 z-50">
+        <a href="#" aria-label="homepage">
+            <svg class="w-8 h-8" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="8" fill="rgba(0,229,195,0.06)" stroke="rgba(0,229,195,0.3)" stroke-width="1"/>
+                <path d="M12 12H20V17H12V12Z" fill="#00e5c3"/>
+                <path d="M12 19H18V24H12V19Z" fill="#00e5c3" opacity="0.7"/>
+                <path d="M12 26H16V32H12V26Z" fill="#00e5c3" opacity="0.4"/>
+                <path d="M22 12H28L22 32" stroke="#00e5c3" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
             </svg>
         </a>
 
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center space-x-8">
-            <ol class="flex items-center space-x-8 list-[decimal-leading-zero] marker:text-highlight">
-                <li>
-                    <a href="#about" class="text-lightest-slate transition-all duration-300 nav-neon">About</a>
-                </li>
-                <li>
-                    <a href="#experience"
-                        class="text-lightest-slate transition-all duration-300 nav-neon">Experience</a>
-                </li>
-                <li>
-                    <a href="#portfolio" class="text-lightest-slate transition-all duration-300 nav-neon">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#contact" class="text-lightest-slate transition-all duration-300 nav-neon">Contact</a>
-                </li>
+        <nav class="hidden md:flex items-center gap-8">
+            <ol class="flex items-center gap-8" style="list-style: none; counter-reset: nav-counter;">
+                <li style="counter-increment: nav-counter;"><a href="#about" class="nav-link" data-before="01. ">About</a></li>
+                <li style="counter-increment: nav-counter;"><a href="#experience" class="nav-link">Experience</a></li>
+                <li style="counter-increment: nav-counter;"><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li style="counter-increment: nav-counter;"><a href="#contact" class="nav-link">Contact</a></li>
             </ol>
+            <a href="mailto:fanshari62@gmail.com" class="cta-btn text-xs py-2.5 px-5">
+                <span style="font-size:0.7rem; opacity:0.6;">→</span> Hire me
+            </a>
         </nav>
 
-        <!-- Mobile Menu Button -->
-        <button id="mobile-menu-button" class="md:hidden z-50">
-            <i data-lucide="menu" class="w-8 h-8 text-highlight"></i>
+        <button id="mobile-menu-button" class="md:hidden z-50 p-2">
+            <i data-lucide="menu" class="w-6 h-6 text-highlight"></i>
         </button>
     </header>
 
-    <!-- Mobile Sidebar Menu -->
-    <aside id="mobile-menu"
-        class="md:hidden fixed top-0 right-0 h-screen w-3/4 max-w-sm bg-light-navy transform translate-x-full transition-transform duration-300 ease-in-out z-40">
-        <nav class="h-full flex flex-col justify-center items-center">
-            <ol
-                class="flex flex-col items-center space-y-8 list-[decimal-leading-zero] marker:text-highlight text-center">
-                <li>
-                    <a href="#about" class="text-lightest-slate transition-all duration-300 nav-neon">About</a>
-                </li>
-                <li>
-                    <a href="#experience"
-                        class="text-lightest-slate transition-all duration-300 nav-neon">Experience</a>
-                </li>
-                <li>
-                    <a href="#portfolio" class="text-lightest-slate transition-all duration-300 nav-neon">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#contact" class="text-lightest-slate transition-all duration-300 nav-neon">Contact</a>
-                </li>
-            </ol>
+    <!-- Mobile Menu -->
+    <aside id="mobile-menu" class="md:hidden fixed top-0 right-0 h-screen w-72 transform translate-x-full transition-transform duration-300 ease-in-out z-40">
+        <nav class="h-full flex flex-col justify-center items-center gap-8 px-8">
+            <a href="#about" class="nav-link text-lg">About</a>
+            <a href="#experience" class="nav-link text-lg">Experience</a>
+            <a href="#portfolio" class="nav-link text-lg">Portfolio</a>
+            <a href="#contact" class="nav-link text-lg">Contact</a>
+            <a href="mailto:fanshari62@gmail.com" class="cta-btn mt-4">Say Hello</a>
         </nav>
     </aside>
+    <div id="overlay" class="md:hidden fixed inset-0 bg-navy/60 z-30 hidden backdrop-blur-sm"></div>
 
-    <!-- Overlay -->
-    <div id="overlay" class="md:hidden fixed inset-0 bg-navy/50 z-30 hidden"></div>
-
-
-
-    <!-- Left Side Element (Social Media) -->
-    <div class="hidden md:block fixed bottom-0 left-12 w-10 z-10">
-        <ul
-            class="flex flex-col items-center space-y-6 after:content-[''] after:block after:w-px after:h-24 after:bg-slate after:mt-6">
-            <li><a href="https://www.linkedin.com/in/farhan-anshari-776289223" target="_blank" rel="noopener noreferrer"
-                    class="block text-slate hover:text-highlight hover:-translate-y-1 transition-all"><i
-                        data-lucide="linkedin" class="w-5 h-5"></i></a></li>
-            <li>
-                <a href="https://lynk.id/farhanthebuilder" target="_blank" rel="noopener noreferrer"
-                    class="block text-slate hover:text-highlight hover:-translate-y-1 transition-all" title="Lynk.id">
-                    <i data-lucide="external-link" class="w-5 h-5"></i>
-                </a>
-            </li>
-            <li>
-                <a href="https://medium.com/@brofarhan" target="_blank" rel="noopener noreferrer"
-                    class="block text-slate hover:text-highlight hover:-translate-y-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="w-5 h-5">
-                        <title>Medium</title>
-                        <path
-                            d="M12 12c0 .24-.01.48-.04.71L7.1 21.49c-.2.4-.6.6-1 .6H5c-.6 0-1-.4-1-1v-1c0-.2.1-.5.3-.7l4.5-6.5c.2-.3.3-.6.3-.9V12c0-3.3-2.7-6-6-6H2c-.6 0-1 .4-1 1v1c0 .2.1.5.3.7l4.2 4.2c.2.2.3.5.3.7v.2C3.8 10.3 2 8.3 2 6V5c0-.6.4-1 1-1h1c3.9 0 7 3.1 7 7zm10.5-3.2c-.3-.2-.6-.3-.9-.3H20c-2.8 0-5 2.2-5 5v2c0 .6.4 1 1 1h1.1c.5 0 .8-.3 1-.7l4.3-7.5c.3-.5.2-1.1-.3-1.3z">
-                        </path>
-                    </svg>
-                </a>
-            </li>
-        </ul>
+    <!-- ═══ SIDE SOCIALS ═══ -->
+    <div class="hidden md:flex fixed bottom-0 left-10 flex-col items-center gap-5 z-10">
+        <a href="https://www.linkedin.com/in/farhan-anshari-776289223" target="_blank" rel="noopener noreferrer" class="social-link"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+        <a href="https://lynk.id/farhanthebuilder" target="_blank" rel="noopener noreferrer" class="social-link"><i data-lucide="external-link" class="w-4 h-4"></i></a>
+        <a href="https://medium.com/@brofarhan" target="_blank" rel="noopener noreferrer" class="social-link" title="Medium">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+        </a>
+        <span class="side-line mt-2"></span>
     </div>
 
-    <!-- Right Side Element (Email) -->
-    <div class="hidden md:block fixed bottom-0 right-12 w-10 z-10">
-        <div
-            class="flex flex-col items-center space-y-24 after:content-[''] after:block after:w-px after:h-24 after:bg-slate after:mt-6">
-            <a href="mailto:fanshari62@gmail.com"
-                class="font-mono text-sm tracking-widest text-slate [writing-mode:vertical-rl] hover:text-highlight hover:-translate-y-1 transition-all">
-                fanshari62@gmail.com
-            </a>
-        </div>
+    <!-- ═══ SIDE EMAIL ═══ -->
+    <div class="hidden md:flex fixed bottom-0 right-10 flex-col items-center gap-5 z-10">
+        <a href="mailto:fanshari62@gmail.com" class="email-link">fanshari62@gmail.com</a>
+        <span class="side-line mt-2"></span>
     </div>
 
+    <!-- ═══ MAIN ═══ -->
+    <div class="container mx-auto px-6 md:px-20 lg:px-40 xl:px-48 relative z-10">
+        <main class="pt-16">
 
-    <div class="container mx-auto px-6 md:px-24 lg:px-48">
-        <main class="pt-24">
-
-            <!-- Hero Section -->
-            <section id="home" class="min-h-[calc(100vh-100px)] flex flex-col justify-center fade-up">
-                <p class="font-mono text-highlight mb-4">Hi, my name is</p>
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold text-lightest-slate">Farhan Anshari.</h1>
-                <h2 class="mt-2 text-4xl sm:text-6xl lg:text-7xl font-bold text-slate">
-                    I'm a <span id="role-text">Backend Developer.</span>
-                </h2>
-                <a href="#about"
-                    class="font-mono text-highlight border border-highlight rounded py-4 px-7 hover:bg-highlight/10 transition-all duration-300 mt-12 w-max"
-                    style="transition: box-shadow 0.3s ease-in-out;"
-                    onmouseover="this.style.boxShadow='0 0 8px rgba(100,255,218,0.5), 0 0 20px rgba(100,255,218,0.3)'"
-                    onmouseout="this.style.boxShadow='none'">
-                    Check out my journey!
-                </a>
-
-
-            </section>
-
-            <!-- About Me Section -->
-            <section id="about" class="py-24" data-aos="fade-up">
-                <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-10">
-                    About Me
-                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
-                </h2>
-                <div class="flex flex-col lg:flex-row gap-12">
-                    <div class="lg:w-3/5 space-y-4">
-                        <p>
-                            I am a developer with over four years of experience in web and API development. Throughout
-                            my career, I have been involved in various large-scale projects, including HRIS, sales order
-                            systems, IT service management applications, and even CCTV system integration for government
-                            use.
-                        </p>
-                        <p>
-                            I am known for being a quick learner, adapting to new technologies, and having strong
-                            programming logic. I thrive in collaborative environments and in every project, I strive to
-                            deliver solutions that are functional, efficient, and maintainable.
-                        </p>
-                    </div>
-                    <div class="lg:w-2/5 flex justify-center items-start">
-                        <div class="relative group w-full max-w-xs mx-auto">
-                            <div
-                                class="absolute -inset-0.5 bg-highlight rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse group-hover:animate-none">
-                            </div>
-                            <div class="relative">
-                                <img src="foto.png" alt="Profile Picture of Farhan Anshari"
-                                    class="rounded-lg w-full h-auto">
-                                <div
-                                    class="absolute inset-0 bg-navy/40 group-hover:bg-transparent transition duration-300 rounded-lg">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- ── HERO ── -->
+            <section id="home" class="min-h-screen flex flex-col justify-center">
+                <div class="fade-in visible">
+                    <div class="hero-tag mb-8">Available for opportunities</div>
                 </div>
 
-                <!-- My Skills Section -->
-                <div class="mt-16" data-aos="fade-up">
-                    <h3 class="text-xl font-bold text-lightest-slate mb-6">My Skills</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-sm font-mono">
-                        <span
-                            class="skill-badge skill-laravel inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="code" class="w-4 h-4"></i> Laravel
-                        </span>
-                        <span
-                            class="skill-badge skill-ci inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="zap" class="w-4 h-4"></i> CodeIgniter
-                        </span>
-                        <span
-                            class="skill-badge skill-symfony inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="box" class="w-4 h-4"></i> Symfony
-                        </span>
-                        <span
-                            class="skill-badge skill-rails inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="gem" class="w-4 h-4"></i> Ruby on Rails
-                        </span>
-                        <span
-                            class="skill-badge skill-node inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="server" class="w-4 h-4"></i> Node.js
-                        </span>
-                        <span
-                            class="skill-badge skill-bootstrap inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="layout" class="w-4 h-4"></i> Bootstrap
-                        </span>
-                        <span
-                            class="skill-badge skill-tailwind inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="feather" class="w-4 h-4"></i> Tailwind CSS
-                        </span>
-                        <span
-                            class="skill-badge skill-mysql inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="database" class="w-4 h-4"></i> MySQL
-                        </span>
-                        <span
-                            class="skill-badge skill-postgres inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="database" class="w-4 h-4"></i> PostgreSQL
-                        </span>
-                        <span
-                            class="skill-badge skill-docker inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="package" class="w-4 h-4"></i> Docker
-                        </span>
-                        <span
-                            class="skill-badge skill-redis inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="database" class="w-4 h-4"></i> Redis
-                        </span>
-                        <span
-                            class="skill-badge skill-linux inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-sm">
-                            <i data-lucide="terminal" class="w-4 h-4"></i> Linux
-                        </span>
-                    </div>
-                </div>
+                <h1 class="hero-name text-5xl sm:text-7xl lg:text-8xl mb-4 fade-in visible" data-delay="1">
+                    Farhan<br>Anshari.
+                </h1>
 
-            </section>
-
-            <!-- Work Experience Section -->
-            <section id="experience" class="py-24" data-aos="fade-up">
-                <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-10">
-                    Where I've Worked
-                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
+                <h2 class="text-4xl sm:text-6xl lg:text-7xl font-display font-bold mb-6 fade-in" data-delay="2" style="font-family:'Syne',sans-serif;">
+                    <span style="color: rgba(204,214,244,0.15); -webkit-text-stroke: 1px rgba(204,214,244,0.12);">I build </span><span id="role-text" class="text-highlight">backend systems.</span>
                 </h2>
-                <div>
-                    <!-- Timeline Item 0 (New) -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div
-                            class="timeline-card bg-light-navy p-6 rounded-md border border-transparent hover:border-highlight/30 transition-all">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Full-stack Developer <span
-                                    class="text-highlight">@ PT MitraComm Ekasarana</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Sep 2025 – Present</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Placed in <strong class="text-highlight">Indosat Ooredoo Hutchison</strong> as a
-                                    Full-stack Developer.</li>
-                                <li>Contributing to the development and maintenance of core systems, ensuring high
-                                    availability and performance.</li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <!-- Timeline Item 1 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer <span
-                                    class="text-highlight">@ Intrias Mandiri Sejati</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Jan 2025 – Sep 2025</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Integrated applications with various monitoring tools including Datadog, Grafana,
-                                    Sonarqube, enabling real-time performance and issue tracking.</li>
-                                <li>Enhanced moderation application to improve operational flow, increase data accuracy,
-                                    and support better decision-making for internal teams.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item 2 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer <span
-                                    class="text-highlight">@ Esha Pharama Technology</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Nov 2023 – Dec 2024</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Served as the sole backend developer responsible for the development and maintenance
-                                    of the IT Service Management (ITSM) system to support Astra’s IT operations.</li>
-                                <li>Designed and implemented features to streamline ticketing workflows, reporting
-                                    dashboards, and system alerts within the ITSM ecosystem.</li>
-                                <li>Collaborated with cross-functional teams to deliver API integrations and backend
-                                    enhancements for various internal projects.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item 3 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Fullstack Developer <span
-                                    class="text-highlight">@ PT BaliTowerindo Sentra, Tbk</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Jan 2022 – Nov 2023</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Led the development and deployment of key modules in the HRIS, including
-                                    e-certificate generation, shift scheduling, overtime tracking, and career path
-                                    workflows.</li>
-                                <li>Built dynamic sales reporting features and dashboards to support the sales order
-                                    project, resulting in improved data visibility and decision-making for sales teams.
-                                </li>
-                                <li>Contributed to a smart-city initiative by developing a live CCTV monitoring
-                                    dashboard used by the DKI Jakarta government, capable of streaming multiple camera
-                                    feeds in real-time.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item 4 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Backend Developer (Intern) <span
-                                    class="text-highlight">@ Pateron Indonesia</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">Sep 2021 – Dec 2021</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Developed backend APIs to fulfill internal system needs, collaborating with senior
-                                    developers and gaining hands-on experience in REST API architecture and Laravel
-                                    framework.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item 5 -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-card bg-light-navy p-6 rounded-md">
-                            <h3 class="text-xl font-semibold text-lightest-slate">Freelance Developer <span
-                                    class="text-highlight">@ Various Clients</span></h3>
-                            <p class="font-mono text-sm text-light-slate mb-3">2023 – Present</p>
-                            <ul class="space-y-2 list-disc list-inside text-slate marker:text-highlight">
-                                <li>Worked on multiple freelance projects through online platforms, building tailored
-                                    web-based applications to meet specific client requirements across various
-                                    industries.</li>
-                                <li>Handled end-to-end development including requirement gathering, system architecture,
-                                    database design, and front-backend integration.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Portfolio Section -->
-            <section id="portfolio" class="py-24 fade-up">
-                <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-4">
-                    Portfolio
-                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
-                </h2>
-                <p class="text-slate mb-10 font-mono text-sm md:text-base">
-                    Here are a few <span class="text-highlight font-semibold">chill vibe-coding projects</span> I built
-                    for fun and learning. Enjoy ✨
+                <p class="max-w-xl text-light-slate leading-relaxed mb-10 fade-in" data-delay="3" style="font-size:1rem;">
+                    Backend-first developer with <strong class="text-lightest-slate">4+ years</strong> shipping scalable APIs, HRIS platforms, ITSM tools, and real-time dashboards — currently at <strong class="text-lightest-slate">Indosat Ooredoo Hutchison</strong>.
                 </p>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Portfolio Item: Email Finance Tracker -->
-                    <div class="portfolio-card glass rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up"
-                        onclick="window.open('https://www.linkedin.com/pulse/how-i-turned-my-spending-problem-side-project-building-farhan-anshari-nfprc/', '_blank')">
-                        <div class="relative aspect-video overflow-hidden">
-                            <div class="project-placeholder">
-                                <i data-lucide="banknote" class="w-16 h-16 text-highlight opacity-50"></i>
-                            </div>
-                            <div
-                                class="absolute inset-0 bg-navy/40 group-hover:bg-transparent transition-all duration-300">
+                <div class="flex flex-wrap gap-4 fade-in" data-delay="4">
+                    <a href="#about" class="cta-btn">
+                        Explore my work <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                    </a>
+                    <a href="mailto:fanshari62@gmail.com" class="cta-btn" style="border-color: rgba(124,110,255,0.3); color: #7c6eff;">
+                        <i data-lucide="mail" class="w-4 h-4"></i> Get in touch
+                    </a>
+                </div>
+
+                <!-- Floating stats -->
+                <div class="grid grid-cols-3 gap-4 mt-20 max-w-sm fade-in" data-delay="5">
+                    <div class="stat-card">
+                        <p class="text-2xl font-display font-bold text-lightest-slate" style="font-family:'Syne',sans-serif;">4+</p>
+                        <p class="text-xs text-slate mt-1" style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.05em;">years exp</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-2xl font-display font-bold text-lightest-slate" style="font-family:'Syne',sans-serif;">10+</p>
+                        <p class="text-xs text-slate mt-1" style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.05em;">projects</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-2xl font-display font-bold" style="font-family:'Syne',sans-serif; color: var(--highlight);">∞</p>
+                        <p class="text-xs text-slate mt-1" style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.05em;">curiosity</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── ABOUT ── -->
+            <section id="about" class="py-28 fade-in">
+                <h2 class="section-heading text-2xl md:text-3xl text-lightest-slate flex items-center mb-14">
+                    About Me
+                    <span class="glow-line"></span>
+                </h2>
+
+                <div class="flex flex-col lg:flex-row gap-16">
+                    <div class="lg:w-3/5 space-y-5">
+                        <p class="leading-relaxed">
+                            I'm a developer with <span class="text-lightest-slate">over four years of experience</span> in web and API development. Throughout my career, I've been involved in various large-scale projects — HRIS, sales order systems, IT service management applications, and even CCTV system integration for government use.
+                        </p>
+                        <p class="leading-relaxed">
+                            I'm known for being a <span class="text-lightest-slate">quick learner</span>, adapting to new technologies, and having strong programming logic. I thrive in collaborative environments and strive to deliver solutions that are functional, efficient, and maintainable.
+                        </p>
+
+                        <!-- Skills -->
+                        <div class="pt-6">
+                            <p class="text-xs font-mono text-highlight mb-4 tracking-widest" style="font-family:'JetBrains Mono',monospace; letter-spacing:0.15em;">// TECH STACK</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="skill-badge"><i data-lucide="code" class="w-3.5 h-3.5 text-red-400"></i> Laravel</span>
+                                <span class="skill-badge"><i data-lucide="zap" class="w-3.5 h-3.5 text-orange-400"></i> CodeIgniter</span>
+                                <span class="skill-badge"><i data-lucide="box" class="w-3.5 h-3.5 text-slate-300"></i> Symfony</span>
+                                <span class="skill-badge"><i data-lucide="gem" class="w-3.5 h-3.5 text-red-500"></i> Ruby on Rails</span>
+                                <span class="skill-badge"><i data-lucide="server" class="w-3.5 h-3.5 text-green-400"></i> Node.js</span>
+                                <span class="skill-badge"><i data-lucide="layout" class="w-3.5 h-3.5 text-purple-400"></i> Bootstrap</span>
+                                <span class="skill-badge"><i data-lucide="feather" class="w-3.5 h-3.5 text-sky-400"></i> Tailwind CSS</span>
+                                <span class="skill-badge"><i data-lucide="database" class="w-3.5 h-3.5 text-blue-400"></i> MySQL</span>
+                                <span class="skill-badge"><i data-lucide="database" class="w-3.5 h-3.5 text-blue-500"></i> PostgreSQL</span>
+                                <span class="skill-badge"><i data-lucide="package" class="w-3.5 h-3.5 text-blue-400"></i> Docker</span>
+                                <span class="skill-badge"><i data-lucide="database" class="w-3.5 h-3.5 text-red-400"></i> Redis</span>
+                                <span class="skill-badge"><i data-lucide="terminal" class="w-3.5 h-3.5 text-yellow-300"></i> Linux</span>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-2">
-                                <h3
-                                    class="text-xl font-bold text-lightest-slate group-hover:text-highlight transition-colors">
-                                    Email Finance Tracker</h3>
-                                <div class="flex gap-3 text-slate">
-                                    <a href="https://github.com/farhan136/email-finance-tracker" target="_blank"
-                                        class="hover:text-highlight"><i data-lucide="github" class="w-5 h-5"></i></a>
-                                    <a href="https://www.linkedin.com/pulse/how-i-turned-my-spending-problem-side-project-building-farhan-anshari-nfprc/"
-                                        target="_blank" class="hover:text-highlight"><i data-lucide="external-link"
-                                            class="w-5 h-5"></i></a>
+                    </div>
+
+                    <div class="lg:w-2/5 flex justify-center items-start">
+                        <div class="profile-wrap w-full max-w-xs">
+                            <img src="foto.png" alt="Farhan Anshari" class="w-full h-auto">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── EXPERIENCE ── -->
+            <section id="experience" class="py-28 fade-in">
+                <h2 class="section-heading text-2xl md:text-3xl text-lightest-slate flex items-center mb-14">
+                    Where I've Worked
+                    <span class="glow-line"></span>
+                </h2>
+
+                <div class="max-w-3xl">
+                    <!-- Item 0 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="text-lightest-slate font-display font-semibold" style="font-family:'Syne',sans-serif;">Full-stack Developer</h3>
+                                    <p class="text-highlight text-sm mt-0.5">@ PT MitraComm Ekasarana <span class="text-slate text-xs">· Indosat Ooredoo Hutchison</span></p>
+                                </div>
+                                <span class="text-xs font-mono shrink-0" style="font-family:'JetBrains Mono',monospace; color:#7a8599; background:rgba(0,229,195,0.06); border:1px solid rgba(0,229,195,0.12); padding:4px 10px; border-radius:100px; white-space:nowrap;">Sep 2025 – Present</span>
+                            </div>
+                            <ul class="space-y-2 text-sm leading-relaxed" style="list-style:none;">
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Placed at Indosat Ooredoo Hutchison as a Full-stack Developer.</li>
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Contributing to the development and maintenance of core systems, ensuring high availability and performance.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="text-lightest-slate font-display font-semibold" style="font-family:'Syne',sans-serif;">Backend Developer</h3>
+                                    <p class="text-highlight text-sm mt-0.5">@ Intrias Mandiri Sejati</p>
+                                </div>
+                                <span class="text-xs font-mono shrink-0" style="font-family:'JetBrains Mono',monospace; color:#7a8599; background:rgba(0,229,195,0.06); border:1px solid rgba(0,229,195,0.12); padding:4px 10px; border-radius:100px; white-space:nowrap;">Jan – Sep 2025</span>
+                            </div>
+                            <ul class="space-y-2 text-sm leading-relaxed" style="list-style:none;">
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Integrated applications with Datadog, Grafana, and Sonarqube for real-time performance and issue tracking.</li>
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Enhanced moderation application to improve operational flow, data accuracy, and decision-making.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="text-lightest-slate font-display font-semibold" style="font-family:'Syne',sans-serif;">Backend Developer</h3>
+                                    <p class="text-highlight text-sm mt-0.5">@ Esha Pharma Technology</p>
+                                </div>
+                                <span class="text-xs font-mono shrink-0" style="font-family:'JetBrains Mono',monospace; color:#7a8599; background:rgba(0,229,195,0.06); border:1px solid rgba(0,229,195,0.12); padding:4px 10px; border-radius:100px; white-space:nowrap;">Nov 2023 – Dec 2024</span>
+                            </div>
+                            <ul class="space-y-2 text-sm leading-relaxed" style="list-style:none;">
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Sole backend developer for Astra's IT Service Management (ITSM) system — responsible end-to-end.</li>
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Designed ticketing workflows, reporting dashboards, and system alert features within the ITSM ecosystem.</li>
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Delivered API integrations and backend enhancements for multiple internal projects.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="text-lightest-slate font-display font-semibold" style="font-family:'Syne',sans-serif;">Fullstack Developer</h3>
+                                    <p class="text-highlight text-sm mt-0.5">@ PT BaliTowerindo Sentra, Tbk</p>
+                                </div>
+                                <span class="text-xs font-mono shrink-0" style="font-family:'JetBrains Mono',monospace; color:#7a8599; background:rgba(0,229,195,0.06); border:1px solid rgba(0,229,195,0.12); padding:4px 10px; border-radius:100px; white-space:nowrap;">Jan 2022 – Nov 2023</span>
+                            </div>
+                            <ul class="space-y-2 text-sm leading-relaxed" style="list-style:none;">
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Led development of key HRIS modules: e-certificate generation, shift scheduling, overtime tracking, career path.</li>
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Built dynamic sales dashboards improving data visibility and decision-making for sales teams.</li>
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Built a live CCTV monitoring dashboard for DKI Jakarta government, streaming multiple real-time camera feeds.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="text-lightest-slate font-display font-semibold" style="font-family:'Syne',sans-serif;">Backend Developer <span class="text-slate font-normal text-sm">(Intern)</span></h3>
+                                    <p class="text-highlight text-sm mt-0.5">@ Pateron Indonesia</p>
+                                </div>
+                                <span class="text-xs font-mono shrink-0" style="font-family:'JetBrains Mono',monospace; color:#7a8599; background:rgba(0,229,195,0.06); border:1px solid rgba(0,229,195,0.12); padding:4px 10px; border-radius:100px; white-space:nowrap;">Sep – Dec 2021</span>
+                            </div>
+                            <ul class="space-y-2 text-sm leading-relaxed" style="list-style:none;">
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Developed backend APIs for internal systems, gaining hands-on experience in REST API architecture and Laravel.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                                <div>
+                                    <h3 class="text-lightest-slate font-display font-semibold" style="font-family:'Syne',sans-serif;">Freelance Developer</h3>
+                                    <p class="text-highlight text-sm mt-0.5">@ Various Clients</p>
+                                </div>
+                                <span class="text-xs font-mono shrink-0" style="font-family:'JetBrains Mono',monospace; color:#7a8599; background:rgba(0,229,195,0.06); border:1px solid rgba(0,229,195,0.12); padding:4px 10px; border-radius:100px; white-space:nowrap;">2023 – Present</span>
+                            </div>
+                            <ul class="space-y-2 text-sm leading-relaxed" style="list-style:none;">
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Built tailored web-based applications across multiple industries via online platforms.</li>
+                                <li class="flex gap-3"><span class="text-highlight shrink-0 mt-0.5">▸</span> Handled end-to-end: requirement gathering, system architecture, database design, and full-stack integration.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── PORTFOLIO ── -->
+            <section id="portfolio" class="py-28 fade-in">
+                <h2 class="section-heading text-2xl md:text-3xl text-lightest-slate flex items-center mb-4">
+                    Portfolio
+                    <span class="glow-line"></span>
+                </h2>
+                <p class="mb-12 text-sm font-mono" style="font-family:'JetBrains Mono',monospace; color:#7a8599;">
+                    // <span class="text-highlight">chill vibe-coding projects</span> — built for fun, learning, and the love of shipping things ✨
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Email Finance Tracker -->
+                    <div class="portfolio-card cursor-pointer" onclick="window.open('https://www.linkedin.com/pulse/how-i-turned-my-spending-problem-side-project-building-farhan-anshari-nfprc/', '_blank')">
+                        <div class="project-icon">
+                            <i data-lucide="banknote" class="w-12 h-12 text-highlight" style="opacity:0.4;"></i>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lightest-slate font-semibold" style="font-family:'Syne',sans-serif; font-size:1rem;">Email Finance Tracker</h3>
+                                <div class="flex gap-3">
+                                    <a href="https://github.com/farhan136/email-finance-tracker" target="_blank" class="social-link" onclick="event.stopPropagation()"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                    <a href="https://www.linkedin.com/pulse/how-i-turned-my-spending-problem-side-project-building-farhan-anshari-nfprc/" target="_blank" class="social-link" onclick="event.stopPropagation()"><i data-lucide="external-link" class="w-4 h-4"></i></a>
                                 </div>
                             </div>
-                            <p class="text-sm text-slate mb-4">A side project born from a personal spending problem,
-                                transformed into a multi-bank automated finance tracker using IMAP and Google Apps
-                                Script.</p>
-                            <div class="flex flex-wrap gap-2 font-mono text-xs">
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">Apps Script</span>
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">IMAP</span>
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">Fintech</span>
+                            <p class="text-sm leading-relaxed mb-4" style="color:#7a8599;">Multi-bank automated finance tracker born from a personal spending problem. Uses IMAP and Google Apps Script.</p>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="tech-tag">Apps Script</span>
+                                <span class="tech-tag">IMAP</span>
+                                <span class="tech-tag">Fintech</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Portfolio Item: InvitaMu -->
-                    <div class="portfolio-card glass rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up"
-                        data-aos-delay="100"
-                        onclick="window.open('https://farhan136.github.io/invitamu_public', '_blank')">
-                        <div class="relative aspect-video overflow-hidden">
-                            <div class="project-placeholder">
-                                <i data-lucide="mail-open" class="w-16 h-16 text-highlight opacity-50"></i>
-                            </div>
-                            <div
-                                class="absolute inset-0 bg-navy/40 group-hover:bg-transparent transition-all duration-300">
-                            </div>
+                    <!-- InvitaMu -->
+                    <div class="portfolio-card cursor-pointer" onclick="window.open('https://farhan136.github.io/invitamu_public', '_blank')">
+                        <div class="project-icon">
+                            <i data-lucide="mail-open" class="w-12 h-12 text-highlight" style="opacity:0.4;"></i>
                         </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-2">
-                                <h3
-                                    class="text-xl font-bold text-lightest-slate group-hover:text-highlight transition-colors">
-                                    InvitaMu</h3>
-                                <div class="flex gap-3 text-slate">
-                                    <a href="https://github.com/farhan136/invitamu_public" target="_blank"
-                                        class="hover:text-highlight"><i data-lucide="github" class="w-5 h-5"></i></a>
-                                    <a href="https://farhan136.github.io/invitamu_public" target="_blank"
-                                        class="hover:text-highlight"><i data-lucide="external-link"
-                                            class="w-5 h-5"></i></a>
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lightest-slate font-semibold" style="font-family:'Syne',sans-serif; font-size:1rem;">InvitaMu</h3>
+                                <div class="flex gap-3">
+                                    <a href="https://github.com/farhan136/invitamu_public" target="_blank" class="social-link" onclick="event.stopPropagation()"><i data-lucide="github" class="w-4 h-4"></i></a>
+                                    <a href="https://farhan136.github.io/invitamu_public" target="_blank" class="social-link" onclick="event.stopPropagation()"><i data-lucide="external-link" class="w-4 h-4"></i></a>
                                 </div>
                             </div>
-                            <p class="text-sm text-slate mb-4">A modern digital invitation platform offering
-                                customizable templates and high-performance RSVP management.</p>
-                            <div class="flex flex-wrap gap-2 font-mono text-xs">
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">HTML/JS</span>
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">CSS</span>
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">SaaS</span>
+                            <p class="text-sm leading-relaxed mb-4" style="color:#7a8599;">Modern digital invitation platform with customizable templates and high-performance RSVP management.</p>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="tech-tag">HTML/JS</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">SaaS</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Portfolio Item: Edu Campus Auth (Starter Kit) -->
-                    <div class="portfolio-card glass rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up"
-                        data-aos-delay="200"
-                        onclick="window.open('https://github.com/farhan136/edu_campus_auth', '_blank')">
-                        <div class="relative aspect-video overflow-hidden">
-                            <div class="project-placeholder">
-                                <i data-lucide="graduation-cap" class="w-16 h-16 text-highlight opacity-50"></i>
-                            </div>
-                            <div
-                                class="absolute inset-0 bg-navy/40 group-hover:bg-transparent transition-all duration-300">
-                            </div>
+                    <!-- Campus Auth Kit -->
+                    <div class="portfolio-card cursor-pointer" onclick="window.open('https://github.com/farhan136/edu_campus_auth', '_blank')">
+                        <div class="project-icon">
+                            <i data-lucide="graduation-cap" class="w-12 h-12 text-highlight" style="opacity:0.4;"></i>
                         </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-2">
-                                <h3
-                                    class="text-xl font-bold text-lightest-slate group-hover:text-highlight transition-colors">
-                                    Campus Auth Kit</h3>
-                                <div class="flex gap-3 text-slate">
-                                    <a href="https://github.com/farhan136/edu_campus_auth" target="_blank"
-                                        class="hover:text-highlight"><i data-lucide="github" class="w-5 h-5"></i></a>
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lightest-slate font-semibold" style="font-family:'Syne',sans-serif; font-size:1rem;">Campus Auth Kit</h3>
+                                <div class="flex gap-3">
+                                    <a href="https://github.com/farhan136/edu_campus_auth" target="_blank" class="social-link" onclick="event.stopPropagation()"><i data-lucide="github" class="w-4 h-4"></i></a>
                                 </div>
                             </div>
-                            <p class="text-sm text-slate mb-4">A robust authentication starter kit based on premium
-                                design templates, optimized for academic and enterprise applications.</p>
-                            <div class="flex flex-wrap gap-2 font-mono text-xs">
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">Laravel</span>
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">Auth</span>
-                                <span class="bg-navy/50 text-highlight px-2 py-1 rounded">Bootstrap</span>
+                            <p class="text-sm leading-relaxed mb-4" style="color:#7a8599;">Robust authentication starter kit based on premium design templates, optimized for academic and enterprise use.</p>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="tech-tag">Laravel</span>
+                                <span class="tech-tag">Auth</span>
+                                <span class="tech-tag">Bootstrap</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Portfolio Item: Todo List (Existing) -->
-                    <div class="portfolio-card glass rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up"
-                        onclick="openPortfolioModal('portfolio/todolist.html')">
-                        <div class="relative aspect-video overflow-hidden">
-                            <div class="project-placeholder">
-                                <i data-lucide="list-checks" class="w-16 h-16 text-highlight opacity-50"></i>
-                            </div>
-                            <div
-                                class="absolute inset-0 bg-navy/50 group-hover:bg-transparent transition-all duration-300">
-                            </div>
+                    <!-- Todo List -->
+                    <div class="portfolio-card cursor-pointer group" onclick="openPortfolioModal('portfolio/todolist.html')">
+                        <div class="project-icon" style="height:180px; flex-direction:column; gap:12px;">
+                            <i data-lucide="list-checks" class="w-12 h-12 text-highlight" style="opacity:0.4;"></i>
+                            <span class="text-xs font-mono text-highlight" style="font-family:'JetBrains Mono',monospace; opacity:0; transition:opacity 0.3s ease;" id="preview-1">[ click to preview ]</span>
                         </div>
-                        <div
-                            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                            <span
-                                class="text-sm font-bold tracking-widest text-highlight border border-highlight px-3 py-1 rounded uppercase">Preview</span>
+                        <div class="p-5">
+                            <h3 class="text-lightest-slate font-semibold mb-2" style="font-family:'Syne',sans-serif; font-size:1rem;">Todo List App</h3>
+                            <p class="text-sm" style="color:#7a8599;">Interactive task management app. Click to preview live.</p>
                         </div>
                     </div>
 
-                    <!-- Portfolio Item: Guessing Game (Existing) -->
-                    <div class="portfolio-card glass rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up"
-                        data-aos-delay="100" onclick="openPortfolioModal('portfolio/guessing.html')">
-                        <div class="relative aspect-video overflow-hidden">
-                            <div class="project-placeholder">
-                                <i data-lucide="binary" class="w-16 h-16 text-highlight opacity-50"></i>
-                            </div>
-                            <div
-                                class="absolute inset-0 bg-navy/50 group-hover:bg-transparent transition-all duration-300">
-                            </div>
+                    <!-- Guessing Game -->
+                    <div class="portfolio-card cursor-pointer group" onclick="openPortfolioModal('portfolio/guessing.html')">
+                        <div class="project-icon" style="height:180px; flex-direction:column; gap:12px;">
+                            <i data-lucide="binary" class="w-12 h-12 text-highlight" style="opacity:0.4;"></i>
+                            <span class="text-xs font-mono text-highlight" style="font-family:'JetBrains Mono',monospace; opacity:0; transition:opacity 0.3s ease;" id="preview-2">[ click to preview ]</span>
                         </div>
-                        <div
-                            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                            <span
-                                class="text-sm font-bold tracking-widest text-highlight border border-highlight px-3 py-1 rounded uppercase">Preview</span>
+                        <div class="p-5">
+                            <h3 class="text-lightest-slate font-semibold mb-2" style="font-family:'Syne',sans-serif; font-size:1rem;">Guessing Game</h3>
+                            <p class="text-sm" style="color:#7a8599;">A fun number guessing game. Click to try it live.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- Portfolio Modal -->
-            <div id="portfolioModal" class="fixed inset-0 bg-black/80 z-50 p-4">
-                <div class="modal-content bg-navy w-full max-w-4xl rounded-md shadow-lg relative overflow-hidden">
-                    <button onclick="closePortfolioModal()"
-                        class="absolute top-2 right-2 text-white hover:text-highlight">
-                        <i data-lucide="x" class="w-6 h-6"></i>
-                    </button>
+            <div id="portfolioModal" class="fixed inset-0 bg-black/85 z-50 p-4">
+                <div class="modal-content bg-navy-mid w-full max-w-4xl rounded-xl shadow-2xl relative overflow-hidden border border-highlight/10" style="background: var(--navy-mid);">
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-white/5">
+                        <div class="flex gap-1.5">
+                            <div class="w-3 h-3 rounded-full bg-red-500 opacity-60"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500 opacity-60"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500 opacity-60"></div>
+                        </div>
+                        <button onclick="closePortfolioModal()" class="text-slate hover:text-highlight transition-colors">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                     <div class="aspect-video w-full">
                         <iframe id="portfolioIframe" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
 
-
-
-            <!-- Contact Section -->
-            <section id="contact" class="py-24" data-aos="fade-up">
-                <h2 class="section-heading text-2xl md:text-3xl font-bold text-lightest-slate flex items-center mb-4">
-                    What's Next?
-                    <span class="ml-4 h-px flex-grow bg-lightest-navy"></span>
-                </h2>
-                <h3 class="text-5xl font-bold text-lightest-slate mb-4">Get In Touch</h3>
-                <p class="max-w-2xl mb-12 text-slate">
-                    <strong class="text-highlight">I'm currently open to new opportunities</strong> — whether it's
-                    full-time work, freelance collaboration, or anything in between.
-                    <br><br>
-                    If you have a question, an idea, or simply want to say hi, feel free to reach out. I’ll do my best
-                    to respond promptly!
-                </p>
-                <a href="mailto:fanshari62@gmail.com"
-                    class="inline-block font-mono text-highlight border border-highlight rounded py-4 px-7 hover:bg-highlight/10 transition-all duration-300"
-                    style="transition: box-shadow 0.3s ease-in-out;"
-                    onmouseover="this.style.boxShadow='0 0 8px rgba(100,255,218,0.5), 0 0 20px rgba(100,255,218,0.3)'"
-                    onmouseout="this.style.boxShadow='none'">
-                    Say Hello
-                </a>
+            <!-- ── CONTACT ── -->
+            <section id="contact" class="py-28 fade-in">
+                <div class="contact-blob">
+                    <h2 class="section-heading text-2xl md:text-3xl text-lightest-slate flex items-center mb-4">
+                        What's Next?
+                        <span class="glow-line"></span>
+                    </h2>
+                    <h3 class="text-4xl md:text-6xl font-display font-bold text-lightest-slate mb-6" style="font-family:'Syne',sans-serif; letter-spacing:-0.02em;">Get In Touch</h3>
+                    <p class="max-w-xl mb-10 leading-relaxed">
+                        <span class="text-highlight font-medium">I'm currently open to new opportunities</span> — full-time, freelance, or anything interesting in between. If you have a question, an idea, or just want to say hi, my inbox is open.
+                    </p>
+                    <a href="mailto:fanshari62@gmail.com" class="cta-btn" style="font-size:0.85rem;">
+                        <i data-lucide="send" class="w-4 h-4"></i> Say Hello
+                    </a>
+                </div>
             </section>
 
         </main>
     </div>
 
-    <!-- Footer -->
-    <footer class="text-center py-6">
-        <a href="https://brittanychiang.com/" target="_blank" rel="noopener noreferrer"
-            class="font-mono text-sm text-slate hover:text-highlight transition-colors">
-            Design inspired by brittanychiang.com
-        </a>
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="py-6 text-center mt-8">
+        <p class="text-xs font-mono" style="font-family:'JetBrains Mono',monospace; color:#3a4555; letter-spacing:0.05em;">
+            Design inspired by <a href="https://brittanychiang.com/" target="_blank" rel="noopener noreferrer" style="color:#7a8599; transition:color 0.3s ease;" onmouseover="this.style.color='#00e5c3'" onmouseout="this.style.color='#7a8599'">brittanychiang.com</a>
+            &nbsp;·&nbsp; built with ♥ by Farhan Anshari
+        </p>
     </footer>
 
-
     <script>
-        // --- Mobile Menu Logic ---
+        // ── Cursor Glow
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', e => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        // ── Mobile Menu
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const overlay = document.getElementById('overlay');
 
         const toggleMenu = () => {
-            if (!mobileMenu) return;
-            const isMenuHidden = mobileMenu.classList.contains('translate-x-full');
+            const isHidden = mobileMenu.classList.contains('translate-x-full');
             mobileMenu.classList.toggle('translate-x-full');
-            if (overlay) overlay.classList.toggle('hidden', isMenuHidden);
-            // document.body.classList.toggle('overflow-hidden', !isMenuHidden);
-            if (mobileMenuButton) {
-                const iconName = isMenuHidden ? 'x' : 'menu';
-                mobileMenuButton.innerHTML = `<i data-lucide="${iconName}" class="w-8 h-8 text-highlight"></i>`;
-                lucide.createIcons();
-            }
+            overlay.classList.toggle('hidden', isHidden);
+            mobileMenuButton.innerHTML = isHidden
+                ? `<i data-lucide="x" class="w-6 h-6 text-highlight"></i>`
+                : `<i data-lucide="menu" class="w-6 h-6 text-highlight"></i>`;
+            lucide.createIcons();
         };
 
-        if (mobileMenuButton) mobileMenuButton.addEventListener('click', toggleMenu);
-        if (overlay) overlay.addEventListener('click', toggleMenu);
-        if (mobileMenu) {
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', toggleMenu);
-            });
-        }
+        mobileMenuButton.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', toggleMenu));
 
-        // --- Navbar Scroll Logic ---
-        let lastScrollTop = 0;
+        // ── Navbar hide on scroll down
+        let lastScroll = 0;
         const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', function () {
-            if (!navbar) return;
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            navbar.style.top = (scrollTop > lastScrollTop && scrollTop > 100) ? '-80px' : '0';
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        window.addEventListener('scroll', () => {
+            const cur = window.pageYOffset;
+            navbar.style.transform = (cur > lastScroll && cur > 80) ? 'translateY(-100%)' : 'translateY(0)';
+            lastScroll = Math.max(0, cur);
         });
 
-        // --- Fade-up & Animate on Scroll ---
-        const animatedElements = document.querySelectorAll('.fade-up');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
+        // ── Fade-in on scroll
+        const fadeEls = document.querySelectorAll('.fade-in');
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
             });
         }, { threshold: 0.1 });
+        fadeEls.forEach(el => obs.observe(el));
 
-        animatedElements.forEach(el => {
-            observer.observe(el);
-        });
-
-        // --- Role Text Animation ---
-        const roles = ["Backend Developer.", "Fullstack Developer."];
-        let roleIndex = 0;
-        const roleTextElement = document.getElementById('role-text');
-
-        if (roleTextElement) {
+        // ── Role text rotation
+        const roles = ["backend systems.", "fullstack apps.", "clean APIs.", "scalable solutions."];
+        let ri = 0;
+        const roleEl = document.getElementById('role-text');
+        if (roleEl) {
             setInterval(() => {
-                roleIndex = (roleIndex + 1) % roles.length;
-                roleTextElement.style.opacity = 0;
-                setTimeout(() => {
-                    roleTextElement.textContent = roles[roleIndex];
-                    roleTextElement.style.opacity = 1;
-                }, 300); // match transition duration
-            }, 3000); // Change text every 3 seconds
+                ri = (ri + 1) % roles.length;
+                roleEl.style.opacity = 0;
+                setTimeout(() => { roleEl.textContent = roles[ri]; roleEl.style.opacity = 1; }, 350);
+            }, 3000);
         }
 
-        // --- Initialize AOS ---
-        AOS.init({
-            duration: 800,
-            once: true,
-            easing: 'ease-out-quad',
+        // ── Portfolio card hover preview text
+        document.querySelectorAll('.portfolio-card').forEach(card => {
+            const preview = card.querySelector('[id^="preview-"]');
+            if (preview) {
+                card.addEventListener('mouseenter', () => preview.style.opacity = '1');
+                card.addEventListener('mouseleave', () => preview.style.opacity = '0');
+            }
         });
 
-        // --- Initialise all icons ---
-        lucide.createIcons();
-
-        function openPortfolioModal(embedUrl) {
+        // ── Modal
+        function openPortfolioModal(url) {
             const modal = document.getElementById('portfolioModal');
-            const iframe = document.getElementById('portfolioIframe');
-            iframe.src = embedUrl;
-
+            document.getElementById('portfolioIframe').src = url;
             modal.classList.add('active');
             document.body.classList.add('overflow-hidden');
         }
-
         function closePortfolioModal() {
             const modal = document.getElementById('portfolioModal');
-            const iframe = document.getElementById('portfolioIframe');
-
             modal.classList.remove('active');
             document.body.classList.remove('overflow-hidden');
-
-            // Tunggu animasi selesai sebelum hapus iframe src
-            setTimeout(() => {
-                iframe.src = '';
-            }, 400); // Sesuai durasi transition
+            setTimeout(() => { document.getElementById('portfolioIframe').src = ''; }, 400);
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash && document.body.classList.contains('overflow-hidden')) {
-                document.body.classList.remove('overflow-hidden');
+        // ── Init icons — called after lucide script loads
+        function initLucide() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
             }
-        });
+        }
     </script>
+    <!-- Lucide loaded at end of body so DOM is ready -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js" onload="initLucide()" onerror="console.warn('Lucide failed to load')"></script>
+    
 </body>
-
 </html>
