@@ -124,6 +124,18 @@
             letter-spacing: 0.05em;
             transition: color 0.3s ease;
         }
+        .nav-link::before {
+            content: '0' counter(nav-counter) '.';
+            color: var(--highlight);
+            margin-right: 0.5rem;
+            font-size: 0.7rem;
+        }
+        #mobile-menu .nav-link::before {
+            content: '0' counter(nav-counter-mobile) '.';
+            color: var(--highlight);
+            margin-right: 0.5rem;
+            font-size: 0.85rem;
+        }
         .nav-link::after {
             content: '';
             position: absolute;
@@ -481,19 +493,20 @@
 
     <!-- ═══ NAVBAR ═══ -->
     <header id="navbar" class="fixed top-0 w-full h-16 flex items-center justify-between px-6 md:px-12 z-50">
-        <a href="#" aria-label="homepage">
-            <svg class="w-8 h-8" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="40" height="40" rx="8" fill="rgba(0,229,195,0.06)" stroke="rgba(0,229,195,0.3)" stroke-width="1"/>
-                <path d="M12 12H20V17H12V12Z" fill="#00e5c3"/>
-                <path d="M12 19H18V24H12V19Z" fill="#00e5c3" opacity="0.7"/>
-                <path d="M12 26H16V32H12V26Z" fill="#00e5c3" opacity="0.4"/>
-                <path d="M22 12H28L22 32" stroke="#00e5c3" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
-            </svg>
+        <!-- Logo -->
+        <a href="#" aria-label="homepage" class="flex items-center group">
+            <div class="relative w-8 h-8 text-highlight transition-all duration-300 group-hover:scale-105">
+                <svg class="absolute inset-0 w-full h-full text-highlight transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(0,229,195,0.6)]"
+                    viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-family="'Fira Code', monospace" font-size="34" font-weight="bold" fill="currentColor">F</text>
+                </svg>
+            </div>
         </a>
 
         <nav class="hidden md:flex items-center gap-8">
             <ol class="flex items-center gap-8" style="list-style: none; counter-reset: nav-counter;">
-                <li style="counter-increment: nav-counter;"><a href="#about" class="nav-link" data-before="01. ">About</a></li>
+                <li style="counter-increment: nav-counter;"><a href="#about" class="nav-link">About</a></li>
                 <li style="counter-increment: nav-counter;"><a href="#experience" class="nav-link">Experience</a></li>
                 <li style="counter-increment: nav-counter;"><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li style="counter-increment: nav-counter;"><a href="#contact" class="nav-link">Contact</a></li>
@@ -509,12 +522,14 @@
     </header>
 
     <!-- Mobile Menu -->
-    <aside id="mobile-menu" class="md:hidden fixed top-0 right-0 h-screen w-72 transform translate-x-full transition-transform duration-300 ease-in-out z-40">
+    <aside id="mobile-menu" class="md:hidden fixed top-0 right-0 h-screen w-72 transform translate-x-full transition-transform duration-300 ease-in-out z-40 bg-navy-mid/95 backdrop-blur-md border-l border-white/5 shadow-2xl">
         <nav class="h-full flex flex-col justify-center items-center gap-8 px-8">
-            <a href="#about" class="nav-link text-lg">About</a>
-            <a href="#experience" class="nav-link text-lg">Experience</a>
-            <a href="#portfolio" class="nav-link text-lg">Portfolio</a>
-            <a href="#contact" class="nav-link text-lg">Contact</a>
+            <ol class="flex flex-col items-start gap-8" style="list-style: none; counter-reset: nav-counter-mobile;">
+                <li style="counter-increment: nav-counter-mobile;"><a href="#about" class="nav-link text-lg">About</a></li>
+                <li style="counter-increment: nav-counter-mobile;"><a href="#experience" class="nav-link text-lg">Experience</a></li>
+                <li style="counter-increment: nav-counter-mobile;"><a href="#portfolio" class="nav-link text-lg">Portfolio</a></li>
+                <li style="counter-increment: nav-counter-mobile;"><a href="#contact" class="nav-link text-lg">Contact</a></li>
+            </ol>
             <a href="mailto:fanshari62@gmail.com" class="cta-btn mt-4">Say Hello</a>
         </nav>
     </aside>
@@ -753,11 +768,49 @@
                     Portfolio
                     <span class="glow-line"></span>
                 </h2>
-                <p class="mb-12 text-sm font-mono" style="font-family:'JetBrains Mono',monospace; color:#7a8599;">
+                <p class="mb-6 text-sm font-mono" style="font-family:'JetBrains Mono',monospace; color:#7a8599;">
                     // <span class="text-highlight">chill vibe-coding projects</span> — built for fun, learning, and the love of shipping things ✨
                 </p>
 
+                <!-- Confidentiality Notice Banner -->
+                <div class="mb-10 p-5 rounded-xl text-slate flex items-start gap-4 shadow-xl backdrop-blur-sm border border-white/5" style="background: rgba(13, 21, 32, 0.7);" data-aos="fade-in">
+                    <div class="bg-highlight/10 p-2.5 rounded-lg text-highlight flex-shrink-0">
+                        <i data-lucide="lock" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lightest-slate font-semibold text-sm md:text-base mb-1">Looking for my professional enterprise work?</h3>
+                        <p class="leading-relaxed text-xs md:text-sm" style="color: #7a8599;">
+                            The majority of my professional projects (including HRIS, sales order systems, enterprise tools, and API integrations) are proprietary internal solutions and protected under non-disclosure agreements (NDAs). To respect and maintain company confidentiality, they are not showcased publicly.
+                        </p>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Futsal Booking System -->
+                    <div class="portfolio-card cursor-pointer group" onclick="openFutsalModal()">
+                        <div class="relative overflow-hidden" style="height: 160px; border-bottom: 1px solid rgba(255,255,255,0.04);">
+                            <img src="portfolio/futsal_app/beranda_1.png" alt="Futsal Booking System Screenshot" class="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105 filter brightness-95 group-hover:brightness-100">
+                            <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-all duration-300"></div>
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300">
+                                <span class="text-xs font-mono text-highlight border border-highlight px-3 py-1 rounded bg-navy/80 uppercase tracking-wider" style="font-family:'JetBrains Mono',monospace;">[ View Gallery ]</span>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lightest-slate font-semibold" style="font-family:'Syne',sans-serif; font-size:1rem;">Futsal Booking System</h3>
+                                <div class="flex gap-3 text-slate">
+                                    <span class="social-link"><i data-lucide="eye" class="w-4 h-4"></i></span>
+                                </div>
+                            </div>
+                            <p class="text-sm leading-relaxed mb-4" style="color:#7a8599;">Web-based sports facility management & scheduling system with user booking flows, automatic invoicing, and a rich admin panel.</p>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="tech-tag">Laravel</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                                <span class="tech-tag">MySQL</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Email Finance Tracker -->
                     <div class="portfolio-card cursor-pointer" onclick="window.open('https://www.linkedin.com/pulse/how-i-turned-my-spending-problem-side-project-building-farhan-anshari-nfprc/', '_blank')">
                         <div class="project-icon">
@@ -825,25 +878,41 @@
 
                     <!-- Todo List -->
                     <div class="portfolio-card cursor-pointer group" onclick="openPortfolioModal('portfolio/todolist.html')">
-                        <div class="project-icon" style="height:180px; flex-direction:column; gap:12px;">
-                            <i data-lucide="list-checks" class="w-12 h-12 text-highlight" style="opacity:0.4;"></i>
-                            <span class="text-xs font-mono text-highlight" style="font-family:'JetBrains Mono',monospace; opacity:0; transition:opacity 0.3s ease;" id="preview-1">[ click to preview ]</span>
+                        <div class="relative overflow-hidden" style="height: 160px; border-bottom: 1px solid rgba(255,255,255,0.04);">
+                            <img src="todolist.png" alt="Todo List Screenshot" class="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105 filter brightness-95 group-hover:brightness-100">
+                            <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-all duration-300"></div>
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300">
+                                <span class="text-xs font-mono text-highlight border border-highlight px-3 py-1 rounded bg-navy/80 uppercase tracking-wider" style="font-family:'JetBrains Mono',monospace;">[ Click to Preview ]</span>
+                            </div>
                         </div>
                         <div class="p-5">
                             <h3 class="text-lightest-slate font-semibold mb-2" style="font-family:'Syne',sans-serif; font-size:1rem;">Todo List App</h3>
-                            <p class="text-sm" style="color:#7a8599;">Interactive task management app. Click to preview live.</p>
+                            <p class="text-sm leading-relaxed mb-4" style="color:#7a8599;">Interactive task management app with filters, transitions, and local storage data persistence.</p>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Guessing Game -->
                     <div class="portfolio-card cursor-pointer group" onclick="openPortfolioModal('portfolio/guessing.html')">
-                        <div class="project-icon" style="height:180px; flex-direction:column; gap:12px;">
-                            <i data-lucide="binary" class="w-12 h-12 text-highlight" style="opacity:0.4;"></i>
-                            <span class="text-xs font-mono text-highlight" style="font-family:'JetBrains Mono',monospace; opacity:0; transition:opacity 0.3s ease;" id="preview-2">[ click to preview ]</span>
+                        <div class="relative overflow-hidden" style="height: 160px; border-bottom: 1px solid rgba(255,255,255,0.04);">
+                            <img src="guessing.png" alt="Guessing Game Screenshot" class="w-full h-full object-cover object-top transition-all duration-500 group-hover:scale-105 filter brightness-95 group-hover:brightness-100">
+                            <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-all duration-300"></div>
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300">
+                                <span class="text-xs font-mono text-highlight border border-highlight px-3 py-1 rounded bg-navy/80 uppercase tracking-wider" style="font-family:'JetBrains Mono',monospace;">[ Click to Preview ]</span>
+                            </div>
                         </div>
                         <div class="p-5">
                             <h3 class="text-lightest-slate font-semibold mb-2" style="font-family:'Syne',sans-serif; font-size:1rem;">Guessing Game</h3>
-                            <p class="text-sm" style="color:#7a8599;">A fun number guessing game. Click to try it live.</p>
+                            <p class="text-sm leading-relaxed mb-4" style="color:#7a8599;">Engaging number prediction game featuring responsive hints, dynamic attempts, and interactive states.</p>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -864,6 +933,63 @@
                     </div>
                     <div class="aspect-video w-full">
                         <iframe id="portfolioIframe" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Futsal Gallery Modal -->
+            <div id="futsalModal" class="fixed inset-0 bg-black/95 z-50 p-4 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+                <div class="modal-content bg-navy w-full max-w-5xl rounded-xl shadow-2xl relative overflow-hidden border border-highlight/10 flex flex-col md:flex-row h-[90vh] md:h-[80vh]" style="background: rgba(13, 21, 32, 1);">
+                    <!-- Close Button -->
+                    <button onclick="closeFutsalModal()" class="absolute top-4 right-4 text-slate hover:text-highlight z-10 transition-colors bg-black/40 p-2 rounded-full border border-white/5">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- Main Content Area: Image Viewer -->
+                    <div class="flex-grow bg-black/40 flex flex-col justify-between relative group/viewer h-3/5 md:h-full md:w-2/3">
+                        <!-- Large Image -->
+                        <div class="flex-grow flex items-center justify-center p-4 relative overflow-hidden">
+                            <img id="futsalMainImage" src="" alt="Futsal App Screenshot" class="max-w-full max-h-full object-contain rounded shadow-lg transition-all duration-300">
+                        </div>
+
+                        <!-- Navigation Arrows -->
+                        <button onclick="prevFutsalSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 text-white hover:text-highlight p-2.5 rounded-full border border-white/5 transition-all opacity-0 group-hover/viewer:opacity-100 focus:opacity-100">
+                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="nextFutsalSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 text-white hover:text-highlight p-2.5 rounded-full border border-white/5 transition-all opacity-0 group-hover/viewer:opacity-100 focus:opacity-100">
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+
+                        <!-- Caption / Counter -->
+                        <div class="border-t border-white/5 p-4 flex justify-between items-center text-xs" style="background: rgba(10, 17, 26, 0.95);">
+                            <span id="futsalImageCaption" class="text-lightest-slate font-medium">Caption</span>
+                            <span id="futsalImageCounter" class="text-highlight font-mono">1 / 13</span>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Area: Details and Thumbnails -->
+                    <div class="md:w-1/3 border-t md:border-t-0 md:border-l border-white/5 p-6 flex flex-col justify-between h-2/5 md:h-full" style="background: rgba(10, 17, 26, 0.4);">
+                        <div class="overflow-y-auto pr-1 flex-grow">
+                            <h3 class="text-lg font-bold text-lightest-slate mb-1" style="font-family: 'Syne', sans-serif;">Futsal Booking System</h3>
+                            <p class="text-highlight font-mono text-[10px] mb-3">Enterprise Case Study</p>
+                            <p class="text-xs leading-relaxed mb-4" style="color: #7a8599;">
+                                A comprehensive web-based management system for sports facilities. Features real-time schedule slot checking, automated invoice generation, user booking history, and a robust admin dashboard to manage bookings, courts, schedules, and revenue reports.
+                            </p>
+
+                            <h4 class="text-[10px] font-semibold uppercase tracking-wider text-lightest-slate mb-2" style="font-family: 'JetBrains Mono', monospace;">All Screenshots</h4>
+                            <!-- Thumbnails Grid -->
+                            <div class="grid grid-cols-4 gap-2 mb-4" id="futsalThumbnails">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-white/5 flex justify-between items-center">
+                            <div class="flex gap-2">
+                                <span class="tech-tag">Laravel</span>
+                                <span class="tech-tag">MySQL</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-slate">Internal System</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -976,10 +1102,94 @@
             setTimeout(() => { document.getElementById('portfolioIframe').src = ''; }, 400);
         }
 
-        // ── Init icons — called after lucide script loads
+        // ── Futsal Gallery Data
+        const futsalScreenshots = [
+            { src: 'portfolio/futsal_app/beranda_1.png', caption: 'Landing Page - Hero & Facilities Showcase' },
+            { src: 'portfolio/futsal_app/beranda_2.png', caption: 'Landing Page - Booking Flow Instructions' },
+            { src: 'portfolio/futsal_app/dashboard_admin.png', caption: 'Admin Dashboard - Booking Statistics & Summary' },
+            { src: 'portfolio/futsal_app/list_lapangan_admin.png', caption: 'Admin - Futsal Courts List' },
+            { src: 'portfolio/futsal_app/edit_lapangan_admin.png', caption: 'Admin - Edit Court Details & Rates' },
+            { src: 'portfolio/futsal_app/list_jadwal_lapangan_admin.png', caption: 'Admin - Time Slots & Booking Schedules' },
+            { src: 'portfolio/futsal_app/tambah_jadwal_lapangan_admin.png', caption: 'Admin - Add Court Slots Editor' },
+            { src: 'portfolio/futsal_app/list_booking_admin.png', caption: 'Admin - Master Booking Transactions List' },
+            { src: 'portfolio/futsal_app/detail_booking_admin.png', caption: 'Admin - Invoice & Booking Status Verification' },
+            { src: 'portfolio/futsal_app/laporan_admin.png', caption: 'Admin - Revenue & Operations Report' },
+            { src: 'portfolio/futsal_app/list_users_admin.png', caption: 'Admin - Registered Users Database' },
+            { src: 'portfolio/futsal_app/pengaturan_admin.png', caption: 'Admin - Facility Configurations & System Profile' },
+            { src: 'portfolio/futsal_app/detail_booking.png', caption: 'User - Invoice & Real-time Booking Status' }
+        ];
+
+        let currentFutsalIndex = 0;
+
+        function openFutsalModal() {
+            const modal = document.getElementById('futsalModal');
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.classList.add('opacity-100');
+            document.body.classList.add('overflow-hidden');
+            renderFutsalSlide(0);
+        }
+
+        function closeFutsalModal() {
+            const modal = document.getElementById('futsalModal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('pointer-events-none', 'opacity-0');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function renderFutsalSlide(index) {
+            currentFutsalIndex = index;
+            const mainImg = document.getElementById('futsalMainImage');
+            const caption = document.getElementById('futsalImageCaption');
+            const counter = document.getElementById('futsalImageCounter');
+
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = futsalScreenshots[index].src;
+                caption.textContent = futsalScreenshots[index].caption;
+                counter.textContent = `${index + 1} / ${futsalScreenshots.length}`;
+                mainImg.style.opacity = '1';
+            }, 150);
+
+            const thumbs = document.querySelectorAll('.futsal-thumb');
+            thumbs.forEach((t, idx) => {
+                if (idx === index) {
+                    t.classList.add('border-highlight', 'ring-1', 'ring-highlight', 'opacity-100');
+                    t.classList.remove('border-white/20', 'opacity-50');
+                } else {
+                    t.classList.remove('border-highlight', 'ring-1', 'ring-highlight', 'opacity-100');
+                    t.classList.add('border-white/20', 'opacity-50');
+                }
+            });
+        }
+
+        function nextFutsalSlide() {
+            let nextIdx = (currentFutsalIndex + 1) % futsalScreenshots.length;
+            renderFutsalSlide(nextIdx);
+        }
+
+        function prevFutsalSlide() {
+            let prevIdx = (currentFutsalIndex - 1 + futsalScreenshots.length) % futsalScreenshots.length;
+            renderFutsalSlide(prevIdx);
+        }
+
+        // ── Init icons & dynamic elements
         function initLucide() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
+            }
+
+            // Initialize Futsal Thumbnails Grid
+            const thumbnailsContainer = document.getElementById('futsalThumbnails');
+            if (thumbnailsContainer) {
+                // Clear any existing children to prevent duplicates
+                thumbnailsContainer.innerHTML = '';
+                futsalScreenshots.forEach((shot, idx) => {
+                    const button = document.createElement('button');
+                    button.className = 'futsal-thumb aspect-video rounded overflow-hidden border border-white/20 opacity-50 hover:opacity-100 transition-all';
+                    button.onclick = () => renderFutsalSlide(idx);
+                    button.innerHTML = `<img src="${shot.src}" alt="Thumb" class="w-full h-full object-cover">`;
+                    thumbnailsContainer.appendChild(button);
+                });
             }
         }
     </script>
