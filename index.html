@@ -731,10 +731,11 @@
                                     <p><span class="text-highlight font-semibold">User:</span> Farhan Anshari</p>
                                     <p><span class="text-highlight font-semibold">Role:</span> Software Engineer / Backend Developer</p>
                                     <p><span class="text-highlight font-semibold">Company:</span> Indosat Ooredoo Hutchison</p>
+                                    <p><span class="text-highlight font-semibold">Side Project:</span> <a href="https://statis.id" target="_blank" class="text-highlight underline font-bold">statis.id</a> (SaaS Hosting Platform)</p>
                                     <p><span class="text-highlight font-semibold">Experience:</span> 4+ Years</p>
-                                    <p><span class="text-highlight font-semibold">Stack:</span> PHP (Laravel, CI, Symfony), Go, Node.js</p>
+                                    <p><span class="text-highlight font-semibold">Stack:</span> Node.js (TS), PHP (Laravel, CI, Symfony), Go</p>
                                     <p><span class="text-highlight font-semibold">Database:</span> PostgreSQL, MySQL, Redis</p>
-                                    <p><span class="text-highlight font-semibold">Tools:</span> Docker, Linux, Git, REST API</p>
+                                    <p><span class="text-highlight font-semibold">Tools:</span> Docker, Prisma, Linux, REST API</p>
                                 </div>
 
                                 <!-- Interactive Log Output -->
@@ -744,6 +745,7 @@
 
                                 <!-- Quick Action Buttons -->
                                 <div class="my-3 pt-2 border-t border-white/5 flex flex-wrap gap-1">
+                                    <button onclick="runConsoleCommand('projects')" class="cmd-chip">projects</button>
                                     <button onclick="runConsoleCommand('skills')" class="cmd-chip">skills</button>
                                     <button onclick="runConsoleCommand('exp')" class="cmd-chip">exp</button>
                                     <button onclick="runConsoleCommand('contact')" class="cmd-chip">contact</button>
@@ -905,6 +907,56 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- statis.id (Flagship SaaS Project) -->
+                    <div class="portfolio-card cursor-pointer group col-span-1 sm:col-span-2 lg:col-span-3 border border-highlight/30 hover:border-highlight/60 transition-all duration-300" onclick="window.open('https://statis.id/', '_blank')">
+                        <div class="p-6 bg-gradient-to-r from-navy-mid via-light-navy/60 to-navy-mid relative overflow-hidden rounded-xl">
+                            <!-- Ambient Glow -->
+                            <div class="absolute -right-10 -bottom-10 w-56 h-56 bg-highlight/10 rounded-full blur-3xl pointer-events-none"></div>
+                            
+                            <div class="flex flex-col lg:flex-row gap-6 items-start justify-between relative z-10">
+                                <div class="space-y-3 max-w-3xl">
+                                    <div class="flex items-center gap-3">
+                                        <div class="p-3 bg-highlight/10 rounded-xl border border-highlight/20 text-highlight">
+                                            <i data-lucide="zap" class="w-6 h-6"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <h3 class="text-lightest-slate font-bold text-xl md:text-2xl font-display" style="font-family:'Syne',sans-serif;">statis.id</h3>
+                                                <span class="text-[10px] font-mono font-bold text-highlight bg-highlight/10 border border-highlight/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1.5">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-highlight animate-pulse"></span> Flagship SaaS
+                                                </span>
+                                            </div>
+                                            <p class="text-xs font-mono text-highlight mt-0.5" style="font-family:'JetBrains Mono',monospace;">https://statis.id — Instant Static Subdomain Hosting Platform</p>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-sm leading-relaxed text-light-slate">
+                                        Platform SaaS <span class="text-lightest-slate font-medium">landing page hosting statis instan</span> khusus pasar Indonesia (UMKM, digital marketer, & vibecoders). Pengguna dapat mengklaim subdomain (<code class="text-highlight">slug.statis.id</code>) dan mempublikasikan berkas HTML/ZIP dalam hitungan detik. Dilengkapi <span class="text-lightest-slate font-medium">multi-layer security scanner</span> (anti-judol, porno & phishing), wildcard subdomain routing, in-browser code editor, integrasi payment gateway lokal (Mayar & Midtrans), Google OAuth, dan automated 14-day grace period auto-purge cron engine.
+                                    </p>
+
+                                    <div class="flex flex-wrap gap-1.5 pt-1">
+                                        <span class="tech-tag text-highlight border-highlight/30">Node.js (v20)</span>
+                                        <span class="tech-tag">Express v5</span>
+                                        <span class="tech-tag">TypeScript</span>
+                                        <span class="tech-tag">Prisma ORM</span>
+                                        <span class="tech-tag">MySQL</span>
+                                        <span class="tech-tag">Google OAuth</span>
+                                        <span class="tech-tag">Mayar / Midtrans</span>
+                                        <span class="tech-tag">Sanity.io</span>
+                                        <span class="tech-tag">Security Scanner</span>
+                                        <span class="tech-tag">Vitest</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 w-full lg:w-auto pt-2 lg:pt-0">
+                                    <a href="https://statis.id/" target="_blank" onclick="event.stopPropagation()" class="cta-btn text-xs py-2.5 px-5 flex items-center justify-center gap-2 w-full text-center">
+                                        Visit statis.id <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Futsal Booking System -->
                     <div class="portfolio-card cursor-pointer group" onclick="openFutsalModal()">
                         <div class="relative overflow-hidden" style="height: 160px; border-bottom: 1px solid rgba(255,255,255,0.04);">
@@ -1352,11 +1404,22 @@
             } else if (lowerCmd === 'help') {
                 respLine.innerHTML = `
                     <p><span class="text-highlight font-bold">Available commands:</span></p>
+                    <p>• <span class="text-purple-300">projects</span> - Featured SaaS & portfolio projects</p>
                     <p>• <span class="text-purple-300">skills</span> - List core technical skills</p>
                     <p>• <span class="text-purple-300">exp</span> - Work experience overview</p>
                     <p>• <span class="text-purple-300">contact</span> - Show email & socials</p>
                     <p>• <span class="text-purple-300">sudo hire</span> - Direct contact shortcut</p>
                     <p>• <span class="text-purple-300">clear</span> - Clear terminal log</p>
+                `;
+            } else if (lowerCmd === 'projects' || lowerCmd === 'statis.id') {
+                respLine.innerHTML = `
+                    <p class="text-emerald-400 font-bold">⚡ Flagship SaaS Platform:</p>
+                    <p>• <span class="text-highlight font-bold">statis.id</span> - Instant Static Subdomain Hosting SaaS (<a href="https://statis.id" target="_blank" class="underline text-highlight">https://statis.id</a>)</p>
+                    <p class="text-slate-400 text-xs pl-3">Node.js (v20), Express v5, TypeScript, Prisma, MySQL, Security Scanner, Mayar/Midtrans</p>
+                    <p class="text-emerald-400 font-bold mt-2">Other Projects:</p>
+                    <p>• Futsal Booking System (Laravel + MySQL)</p>
+                    <p>• Email Finance Tracker (Apps Script + IMAP)</p>
+                    <p>• InvitaMu (Digital Invitation Platform)</p>
                 `;
             } else if (lowerCmd === 'skills') {
                 respLine.innerHTML = `
